@@ -1,0 +1,222 @@
+@import "../variables";
+
+.main-area {
+  width: 100%;
+  height: auto;
+
+  .item-list {
+    border: solid 1px #1e7e34;
+    padding: 15px;
+    border-radius: 10px;
+
+    .product-list-title {
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    .admin-product-list {
+      border: solid 1px #dee1e7;
+      border-radius: 5px;
+      padding-right: 15px;
+      padding-left: 15px;
+
+      .small-cents {
+        font-size: 0.7em;
+      }
+
+      .product-list-delete-btn {
+        cursor: pointer;
+      }
+
+      .item-table {
+        thead {
+          border-top: white;
+        }
+
+        th {
+          font-weight: 600;
+        }
+
+        td:nth-child(1) {
+          font-weight: bold;
+          text-align: left;
+          min-width: 0.1em;
+          font-size: 0.8em;
+        }
+
+        td:nth-child(3) {
+          text-align: left;
+        }
+
+        th:nth-child(3), th:nth-child(1) {
+          text-align: left;
+        }
+
+        td:nth-child(4) {
+          font-size: 1.0em;
+          text-align: center;
+        }
+
+        td:nth-child(7) {
+          min-width: 2em;
+        }
+
+        td, th {
+          border: none !important;
+          border-bottom: 1px solid #dee2e6 !important;
+          vertical-align: middle !important;
+          text-align: center;
+
+          .cart-product-image {
+            width: 5em;
+            height: auto;
+          }
+        }
+
+        .remove-btn {
+          cursor: pointer;
+        }
+
+        .edit-btn {
+          cursor: pointer;
+        }
+      }
+
+      td {
+        padding: 0;
+        font-size: small;
+      }
+
+      .react-bootstrap-table th .caret-4-desc:before {
+        margin-left: 3.5px;
+        content: "\2191";
+        opacity: .4;
+        box-sizing: inherit;
+      }
+
+      .react-bootstrap-table th .order-4:after {
+        content: "\2191 \2193";
+        box-sizing: inherit;
+        opacity: .4;
+        cursor: pointer;
+      }
+
+      .react-bootstrap-table th .caret-4-desc:after {
+        content: "\2193";
+        box-sizing: inherit;
+        cursor: pointer;
+      }
+
+      .react-bootstrap-table th .caret-4-asc:before {
+        margin-left: 3.5px;
+        content: "\2191";
+        box-sizing: inherit;
+        cursor: pointer;
+      }
+
+      .react-bootstrap-table th .caret-4-asc:after {
+        content: "\2193";
+        box-sizing: inherit;
+        opacity: .4;
+        cursor: pointer;
+      }
+
+      .react-bootstrap-table-pagination {
+        .dropdown-menu {
+          min-width: 2rem;
+          font-weight: 800;
+        }
+      }
+
+      .react-bootstrap-table-pagination-total {
+        font-size: 1em;
+        color: #757575;
+        margin-left: 10px;
+      }
+
+      .pagination {
+        .page-link {
+          color: #455A64;
+          font-size: 0.85rem;
+        }
+
+        .page-item.active .page-link {
+          color: #fff;
+          background-color: #81C784;
+          border-color: #81C784;
+        }
+
+        justify-content: flex-end;
+      }
+
+      .react-bs-table-sizePerPage-dropdown {
+        button {
+          padding: 5px 15px;
+          font-size: 0.8em;
+        }
+
+        .dropdown-menu {
+          min-width: 1rem;
+          padding: 5px 0;
+          margin-right: 1rem;
+
+          a {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $medium-device-size) {
+  .main-area {
+    .admin-product-list {
+      font-size: 0.8em;
+
+      thead {
+        font-size: .8em;
+      }
+
+      .react-bootstrap-table-pagination-total {
+        font-size: 0.9em;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $extra-small-device-size) {
+  .main-area {
+    .admin-product-list {
+      .pagination {
+        .page-link {
+          font-size: 0.5em;
+          padding: 5px 5px;
+        }
+      }
+
+      .item-table {
+        td:nth-child(1) {
+          font-size: 1.0em;
+        }
+
+        td:nth-child(7) {
+          min-width: 5em;
+        }
+
+        td:nth-child(8) {
+          min-width: 5em;
+        }
+
+        td {
+          min-width: 8em;
+
+          .cart-product-image {
+            width: 3em;
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+.contact-us-div {
+  border: solid 1px #1e7e34;
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 0 1em;
+  min-height: 400px;
+
+  .details {
+    font-size: 1em;
+    i {
+      color: red;
+    }
+
+    label {
+      color: black;
+    }
+
+    a {
+      cursor: pointer;
+      label {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $medium-device-size) {
+  .contact-us-div {
+    h2 {
+      font-size: 1.3em;
+    }
+
+    .details {
+      font-size: 0.8em;
+
+      .one-link {
+        display: inline-flex;
+      }
+    }
+  }
+}

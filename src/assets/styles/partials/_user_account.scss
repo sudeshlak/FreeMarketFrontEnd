@@ -1,0 +1,213 @@
+@import "../variables";
+
+.user-account {
+  min-height: 50vh;
+
+  .user-orders-header {
+    margin: 20px 15px 0 15px;
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+
+  .user-orders-list {
+    border: solid 1px #1e7e34;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 3px 15px 15px 15px;
+
+    .item-table {
+      thead {
+        border-top: white;
+      }
+
+      th {
+        font-weight: 600;
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+
+      td:nth-child(1) {
+        font-weight: bold;
+        text-align: center;
+        min-width: 0.1em;
+        font-size: 0.8em;
+      }
+
+      td:nth-child(3) {
+        text-align: center;
+      }
+
+      td:nth-child(4) {
+        font-size: 0.8em;
+        text-align: center;
+      }
+
+      td:nth-child(5) {
+        padding: 5px;
+      }
+
+      td:nth-child(7) {
+        min-width: 1em;
+      }
+
+      td, th {
+        border: none !important;
+        border-bottom: 1px solid #dee2e6 !important;
+        vertical-align: middle !important;
+        text-align: center;
+      }
+    }
+
+    td {
+      padding: 0;
+      font-size: 1em;
+    }
+
+    .react-bootstrap-table th .caret-4-desc:before {
+      margin-left: 3.5px;
+      content: "\2191";
+      opacity: .4;
+      box-sizing: inherit;
+    }
+
+    .react-bootstrap-table th .order-4:after {
+      content: "\2191 \2193";
+      box-sizing: inherit;
+      opacity: .4;
+      cursor: pointer;
+    }
+
+    .react-bootstrap-table th .caret-4-desc:after {
+      content: "\2193";
+      box-sizing: inherit;
+      cursor: pointer;
+    }
+
+    .react-bootstrap-table th .caret-4-asc:before {
+      margin-left: 3.5px;
+      content: "\2191";
+      box-sizing: inherit;
+      cursor: pointer;
+    }
+
+    .react-bootstrap-table th .caret-4-asc:after {
+      content: "\2193";
+      box-sizing: inherit;
+      opacity: .4;
+      cursor: pointer;
+    }
+
+    .react-bootstrap-table-pagination {
+      .dropdown-menu {
+        min-width: 2rem;
+        font-weight: 800;
+      }
+    }
+
+    .react-bootstrap-table-pagination-total {
+      font-size: 1em;
+      color: #757575;
+      margin-left: 10px;
+    }
+
+    .pagination {
+      .page-link {
+        color: #455A64;
+        font-size: 0.85rem;
+      }
+
+      .page-item.active .page-link {
+        color: #fff;
+        background-color: #81C784;
+        border-color: #81C784;
+      }
+
+      justify-content: flex-end;
+    }
+
+    .react-bs-table-sizePerPage-dropdown {
+      button {
+        padding: 5px 15px;
+        font-size: 0.8em;
+      }
+
+      .dropdown-menu {
+        min-width: 1rem;
+        padding: 5px 0;
+        margin-right: 1rem;
+
+        a {
+          font-weight: 600;
+        }
+      }
+    }
+
+    .view-order-button-div {
+      margin-right: -3.9em;
+      margin-left: 2em;
+      width: 100px;
+      font-size: 0.9em;
+      border-radius: 10px;
+      padding: 5px 5px;
+
+      .view-order-button {
+        width: 60px;
+        height: auto;
+      }
+    }
+
+    .view-order-button-div:hover {
+      box-shadow: 0 1px 7px #c4c4c4;
+      cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (max-width: $medium-device-size) {
+  .user-account {
+    .user-orders-list {
+      .item-table {
+        tbody {
+          font-size: .7em;
+        }
+
+        thead {
+          font-size: .7em;
+        }
+
+        .view-order-button-div {
+          margin-right: -2em;
+          margin-left: 1em;
+
+          .view-order-button {
+            width: 40px;
+          }
+        }
+      }
+
+      .react-bootstrap-table-pagination-total {
+        font-size: 0.9em;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $extra-small-device-size) {
+  .user-account {
+    .user-orders-list {
+      .item-table {
+        tbody {
+          font-size: .5em;
+        }
+
+        thead {
+          font-size: .5em;
+        }
+      }
+
+      .react-bootstrap-table-pagination-total {
+        font-size: 0.5em;
+      }
+    }
+  }
+}

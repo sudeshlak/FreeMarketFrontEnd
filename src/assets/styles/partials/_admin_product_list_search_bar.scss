@@ -1,0 +1,14 @@
+.main-area{
+  .admin-product-list-search-bar{
+    margin-top:  10px;
+    margin-bottom: 10px;
+      .search-icon {
+        color: #9aa0a6;
+        margin-left: 15px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+  }
+}

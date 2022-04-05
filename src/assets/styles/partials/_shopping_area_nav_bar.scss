@@ -1,0 +1,63 @@
+@import "../variables";
+
+.shopping-area {
+  min-height: 5vh;
+  .shopping-area-nav-bar {
+    .nav-nar-third {
+      margin-left: 20px;
+      margin-right: 20px;
+
+      .nav-drop-down {
+        border: 1px solid #1e7e34;
+        border-radius: 5px;
+      }
+
+      .me-auto {
+        font-size: 0.9em;
+      }
+
+      a {
+        text-decoration: none;
+        color: #1d1d1d;
+        font-weight: 400;
+        padding: 7px 12px;
+      }
+
+      .navbar-collapse {
+        margin-top: 10px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $medium-device-size) {
+  .shopping-area {
+    .shopping-area-nav-bar {
+      .nav-nar-third {
+        margin-left: 0px;
+        margin-right: 0px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $extra-small-device-size) {
+  .shopping-area {
+    .shopping-area-nav-bar {
+      .nav-nar-third {
+        .dropdown-toggle::after {
+          float: right;
+          margin-top: 8px;
+        }
+
+        .navbar-toggler {
+          padding: 0rem 0.65rem;
+        }
+
+        .navbar-toggler-icon {
+          width: 1em
+        }
+      }
+    }
+  }
+}

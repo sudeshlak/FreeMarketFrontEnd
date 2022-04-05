@@ -1,0 +1,202 @@
+@import "../variables";
+
+$label-color: #262626;
+
+.top-nav-col {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  background-color: white;
+
+  .nav-link {
+    color: #4caf50;
+    border: #4caf50 1px solid;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    margin-right: 15px;
+
+    &:active {
+      background-color: #4caf50;
+      color: white;
+      border: 3px;
+    }
+  }
+
+  .navbar {
+    padding: 0 5px 0 12px;
+    justify-content: flex-end;
+    margin-top: 4px;
+
+    .number-div {
+      color: $label-color;
+      padding-bottom: 6.5px;
+
+      .number {
+        text-decoration: none;
+        font-size: .8rem;
+        cursor: pointer;
+        background-color: transparent;
+        margin: 0 24px 0 13px;
+      }
+    }
+
+    .navbar-toggler {
+      margin: 2px 8px 2px 2px;
+      padding: 7px 11px;
+      font-size: 1rem;
+    }
+
+    .navbar-collapse {
+      justify-content: flex-end !important;
+      flex-grow: 0 !important;
+
+      .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        padding: 0 0 1px 5px;
+        margin: 0 -2px 0 10px;
+        list-style: none;
+
+        .delivery-area {
+          margin: 2px 14px 0 0;
+
+          a {
+            padding: 0;
+            text-decoration: none;
+
+            .fa-truck {
+              display: inline;
+              margin-top: 7px;
+              margin-right: 0;
+              padding-left: 2px;
+              padding-right: 5px;
+              width: 1.25em;
+              color: black;
+            }
+
+            label {
+              width: auto;
+              color: rgba(0, 0, 0, .5);
+              text-decoration: none;
+              font-size: .8rem;
+              padding: 3px 0.5rem 0 0.6rem;
+              cursor: pointer;
+            }
+
+            label:hover {
+              color: $label-color;
+            }
+          }
+        }
+
+        .my-account {
+          margin: 2px 0;
+
+          a {
+            text-decoration: none;
+            padding: 0;
+
+            i {
+              width: auto;
+              padding: 1px 1px 2px 1px;
+              color: black;
+            }
+
+            label {
+              color: rgba(0, 0, 0, .5);
+              width: auto;
+              padding: 3px 0.5rem 0 0.5rem;
+              text-decoration: none;
+              font-size: .8rem;
+              cursor: pointer;
+            }
+
+            label:hover {
+              color: $label-color;
+            }
+          }
+        }
+
+        .register {
+          margin: 2px 0;
+
+          .btn {
+            padding-top: 1px;
+            padding-bottom: 1px;
+            margin-top: 1px;
+            color: #4caf50;
+            border: #4caf50 1px solid;
+            font-size: 0.9rem;
+          }
+
+          .btn:hover {
+            background-color: white;
+          }
+
+          .btn:focus {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+          }
+        }
+
+        .login-row {
+          margin: 2px 0;
+          padding-top: 2px;
+
+          .logout-button {
+            color: #4caf50;
+            font-size: 0.9rem;
+            background: none;
+            border: none;
+            padding-left: 0;
+            padding-right: 0;
+            padding-top: 0;
+
+            &:focus {
+              outline: none;
+              box-shadow: none;
+            }
+          }
+
+          a {
+            color: #4caf50;
+            text-decoration: none;
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+
+  .divider {
+    position: relative;
+    border-top: 1px solid #e0e0e0;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .top-nav-col {
+    .navbar {
+      .navbar-collapse {
+        .navbar-nav {
+          flex-direction: column;
+
+          .register {
+            .btn {
+              padding-top: 1px;
+              padding-bottom: 1px;
+              margin: 1px;
+            }
+          }
+
+          .login-row {
+            a {
+              padding: 1px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

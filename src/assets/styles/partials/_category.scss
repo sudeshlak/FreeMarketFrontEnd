@@ -1,0 +1,136 @@
+@import "../variables";
+
+.category {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1210px;
+
+  .cat-img.active {
+    background-color: #f1f8e9;
+    border: 2px solid #4caf50;
+  }
+
+  .cat-box {
+    position: relative;
+    height: auto;
+    background-color: #fff;
+    border: 1px solid #bdbdbd;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .cat-img {
+    position: relative;
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  .cat-img-p {
+    font-weight: 700;
+    text-align: center;
+    font-size: .9rem;
+  }
+}
+@media only screen and (max-width: $extra-large-device-size) {
+
+  .category {
+    margin-right: -98px;
+    margin-left: -98px;
+    flex-wrap: wrap;
+
+    .cat-img img {
+      width: 100%;
+      height: auto;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    .cat-img-p {
+      font-size: .7em;
+    }
+
+    .cat-box {
+      justify-content: center;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .category {
+    margin-right: -30px;
+    margin-left: -30px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .cat-img img {
+      width: 100%;
+      height: auto;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    .cat-img-p {
+      font-size: .7em;
+    }
+
+    .cat-box {
+      justify-content: center;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+}
+
+@media only screen and (max-width: $medium-device-size) {
+  .category {
+    margin-right: -30px;
+    margin-left: -30px;
+    display: flex;
+    flex-wrap: wrap;
+
+    .cat-img img {
+      width: 100%;
+      height: auto;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    .cat-img-p {
+      font-size: .7em;
+    }
+
+    .cat-box {
+      justify-content: center;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+  }
+}
+
+@media only screen and (max-width: $extra-small-device-size) {
+  .category {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+
+    .cat-img img {
+      width: 100%;
+      height: auto;
+      padding-right: 5px;
+      padding-left: 5px;
+
+    }
+
+    .cat-img-p {
+      font-size: .5em;
+    }
+
+    .cat-box {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+}

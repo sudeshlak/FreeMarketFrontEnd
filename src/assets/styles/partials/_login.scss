@@ -1,0 +1,145 @@
+@import "../variables";
+
+$color-green: #28a745;
+
+.login-form {
+  position: relative;
+  background-color: #e1ffc1;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 35%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  height: 20vh;
+  left: 0;
+  right: 0;
+  border-radius: 15px;
+  padding: 2%;
+  box-shadow: #317b0a;
+
+  .cart-icon {
+    color: $color-green;
+    padding-top: 15%;
+  }
+
+  .form_container {
+    margin-top: 10vh;
+  }
+
+  .login_btn {
+    width: 100%;
+    background: $color-green !important;
+    color: white !important;
+
+    &:focus {
+      box-shadow: none !important;
+      outline: 0 !important;
+    }
+  }
+
+  .login_container {
+    padding: 0 2rem;
+  }
+
+  .input-group-text {
+    background: $color-green !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+  }
+
+  .input_user {
+    border: 1px solid $color-green;
+    box-shadow: none !important;
+    outline: 0 !important;
+  }
+
+  .input_pass {
+    border: 1px solid $color-green;
+    &:focus {
+      box-shadow: none !important;
+      outline: 0 !important;
+    }
+  }
+
+  .password-eye{
+    cursor:pointer;
+    margin-top: -13%;
+    position: relative;
+    color: gray;
+    width: 10%;
+    right: 5%;
+    left: 86%;
+    z-index: 5;
+  }
+
+  .invalid-user {
+    color: red;
+    display: grid;
+  }
+
+  .custom-checkbox {
+    .custom-control-input {
+      &:not(checked) ~ .custom-control-label {
+        &:hover {
+          cursor: pointer;
+        }
+
+        &::before {
+          background-color: white !important;
+          border: 1px solid $color-green;
+        }
+      }
+
+      &:checked ~ .custom-control-label {
+        &:hover {
+          cursor: pointer;
+        }
+
+        &::before {
+          background-color: #0b3be8 !important;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $large-device-size) {
+  .login-form {
+    margin-top: 0;
+    font-size: 0.7em;
+    width: 45%;
+    margin-bottom: -5%;
+
+    .form_container {
+      margin-top: 5vh;
+    }
+
+    .cart-icon {
+      color: $color-green;
+      padding-top: 15%;
+      padding-bottom: 0;
+      margin-bottom: 0;
+      font-size: 2em;
+    }
+  }
+
+  .custom-control-label{
+    padding-top: 3px;
+  }
+}
+
+@media only screen and (max-width: $extra-small-device-size) {
+  .login-form {
+    margin-top: 0;
+    font-size: 0.7em;
+    width: 90%;
+    margin-bottom: -5%;
+  }
+
+  .custom-control-label{
+    padding-top: 5px;
+  }
+}

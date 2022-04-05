@@ -1,0 +1,95 @@
+@import "src/assets/styles/variables";
+
+$rounded-corners: true;
+
+.banner-image .btn {
+  position: absolute;
+  top: 66%;
+  left: 65.5%;
+  transform: translate(-34.5%, -34%);
+  -ms-transform: translate(-40%, -40%);
+  background-color: white;
+  color: black;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 10px 35px;
+  border: none;
+  cursor: pointer;
+  border-radius: if($rounded-corners, 25px, null);
+  text-align: center;
+}
+
+.banner-image .btn:hover {
+  background-color: greenyellow;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  opacity: .8;
+}
+
+.carousel-control-next-icon, .carousel-control-prev-icon {
+  width: 30em !important;
+  background-size: 100% 600% !important;
+  height: 1.5rem;
+}
+
+.carousel-control-next{
+  right: 1%;
+  width: 8em;
+}
+
+.carousel-control-prev{
+  left: 1%;
+  width: 8em;
+}
+
+@media only screen and (max-width: $extra-large-device-size) {
+  .banner-image .btn {
+    font-size: .8em;
+    padding: 10px 30px;
+  }
+}
+
+@media only screen and (max-width: $large-device-size) {
+  .banner-image .btn {
+    font-size: .6em;
+    padding: 8px 20px;
+  }
+}
+
+@media only screen and (max-width: $medium-device-size) {
+  .banner-image .btn {
+    font-size: .5em;
+    padding: 6px 18px;
+  }
+}
+
+@media only screen and (max-width: $extra-small-device-size) {
+  .banner-image .btn {
+    font-size: .3em;
+    padding: 4px 15px;
+  }
+
+  .carousel-control-next-icon, .carousel-control-prev-icon {
+    width: 15em !important;
+    background-size: 100% 600% !important;
+    height: 1.5rem;
+  }
+
+  .carousel-control-next{
+    right: 0;
+    width: 5em;
+  }
+
+  .carousel-control-prev{
+    left: 0;
+    width: 5em;
+  }
+}
+
+@media only screen and (max-width: $ex-extra-small-device-size) {
+  .banner-image .btn {
+    font-size: .3em;
+    padding: 3px 10px;
+  }
+}

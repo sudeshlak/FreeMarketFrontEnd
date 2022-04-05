@@ -1,0 +1,13 @@
+@import "../variables";
+
+.shopping-area {
+  .search-bar {
+    .search-icon {
+      color: #9aa0a6;
+      margin-left: 15px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

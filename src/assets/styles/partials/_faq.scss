@@ -1,0 +1,51 @@
+.faq-contant-div {
+  border: solid 1px #1e7e34;
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 0 1em;
+
+  .faqs {
+    .one-faq {
+      margin-bottom: 1rem;
+
+      .question {
+        background-color: white;
+        color: black;
+        text-align: start;
+        font-weight: bold;
+        white-space: normal;
+
+        &:hover {
+          background-color: #4caf50;
+          color: white;
+        }
+
+        &:focus {
+          background-color: #4caf50;
+          shape-outside: none;
+          color: white;
+        }
+      }
+
+      .answer {
+        color: black;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $medium-device-size) {
+  .faq-contant-div {
+    .faqs {
+      .one-faq {
+        .question {
+          font-size: 0.8em;
+        }
+
+        .answer {
+          font-size: 0.8em;
+        }
+      }
+    }
+  }
+}

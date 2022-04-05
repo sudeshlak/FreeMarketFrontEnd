@@ -1,0 +1,282 @@
+@mixin order-item-list($font_color) {
+  .order-div {
+    border: solid 1px $font_color;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 0 15px 0 15px;
+
+    .title {
+      font-size: .9em;
+      font-weight: 600;
+      color: $font_color !important;
+    }
+
+    .order-item-table {
+      .item-table {
+        thead {
+          border-top: white;
+        }
+
+        th {
+          font-weight: 500;
+        }
+
+        td:nth-child(1) {
+          font-weight: bold;
+          text-align: center;
+          min-width: 0.1em;
+          font-size: 0.8em;
+        }
+
+        td:nth-child(3) {
+          text-align: center;
+        }
+
+        th:nth-child(3), th:nth-child(1) {
+          text-align: center;
+        }
+
+        td:nth-child(4) {
+          font-size: 1.0em;
+          text-align: center;
+        }
+
+        td:nth-child(7) {
+          min-width: 2em;
+        }
+
+        td, th {
+          border: none !important;
+          border-bottom: 1px solid #dee2e6 !important;
+          vertical-align: middle !important;
+          text-align: center;
+        }
+
+        .order-table-image {
+          margin-top: 3px;
+          margin-bottom: 3px;
+          width: 5em;
+          height: auto;
+        }
+      }
+
+      .react-bootstrap-table th .caret-4-desc:before {
+        margin-left: 3.5px;
+        content: "\2191";
+        opacity: .4;
+        box-sizing: inherit;
+      }
+
+      .react-bootstrap-table th .order-4:after {
+        content: "\2191 \2193";
+        box-sizing: inherit;
+        opacity: .4;
+        cursor: pointer;
+      }
+
+      .react-bootstrap-table th .caret-4-desc:after {
+        content: "\2193";
+        box-sizing: inherit;
+        cursor: pointer;
+      }
+
+      .react-bootstrap-table th .caret-4-asc:before {
+        margin-left: 3.5px;
+        content: "\2191";
+        box-sizing: inherit;
+        cursor: pointer;
+      }
+
+      .react-bootstrap-table th .caret-4-asc:after {
+        content: "\2193";
+        box-sizing: inherit;
+        opacity: .4;
+        cursor: pointer;
+      }
+
+      .react-bootstrap-table-pagination {
+        .dropdown-menu {
+          min-width: 2rem;
+          font-weight: 800;
+        }
+      }
+
+      .react-bootstrap-table-pagination-total {
+        font-size: 1em;
+        color: #757575;
+        margin-left: 10px;
+      }
+
+      .pagination {
+        .page-link {
+          color: #455A64;
+          font-size: 0.85rem;
+        }
+
+        .page-item.active .page-link {
+          color: #fff;
+          background-color: #81C784;
+          border-color: #81C784;
+        }
+
+        justify-content: flex-end;
+      }
+
+      .react-bs-table-sizePerPage-dropdown {
+        button {
+          padding: 5px 15px;
+          font-size: 0.8em;
+        }
+
+        .dropdown-menu {
+          min-width: 1rem;
+          padding: 5px 0;
+          margin-right: 1rem;
+
+          a {
+            font-weight: 600;
+          }
+        }
+      }
+
+      td {
+        padding: 0;
+        font-size: small;
+      }
+    }
+
+    .order-details {
+      .order-item-head {
+        font-size: .9em;
+        font-weight: 600;
+        color: $font_color !important;
+      }
+    }
+
+    .total-bill {
+      .total-bill-price {
+        color: #d00000;
+        font-weight: 700;
+        font-size: 1.3em;
+        margin-right: 7vh;
+      }
+
+      .total-bill-label {
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.user-order {
+  .user-order-header {
+    margin: 20px 15px 0 15px;
+    font-size: 1.1em;
+    font-weight: 600;
+  }
+  .delivery {
+    border-bottom: solid 1px #dee1e7;
+
+    .delivery-price {
+      font-size: 1.2em;
+      margin-right: 7vh;
+    }
+
+    .delivery-label {
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+  }
+
+  .order-approved {
+    @include order-item-list(#1e7e34);
+  }
+
+  .order-rejected {
+    @include order-item-list(#ff0000)
+  }
+
+  .order-requested {
+    @include order-item-list(#ffab01)
+  }
+}
+
+@media only screen and (max-width: $medium-device-size) {
+  .user-order {
+    .order-requested, .order-approved, .order-rejected {
+      .order-div {
+        .title {
+          font-size: 0.7em;
+        }
+
+        .order-item-table {
+          .item-table {
+
+            thead {
+              font-size: 0.8em;
+            }
+
+            td:nth-child(1) {
+              min-width: 0.1em;
+              font-size: 0.6em;
+            }
+
+            td:nth-child(3) {
+              min-width: 0.1em;
+              font-size: 0.7em;
+            }
+
+            td:nth-child(4) {
+              min-width: 0.1em;
+              font-size: 0.7em;
+            }
+
+            td:nth-child(5) {
+              min-width: 0.1em;
+              font-size: 0.7em;
+            }
+
+            td:nth-child(6) {
+              min-width: 0.1em;
+              font-size: 0.7em;
+            }
+
+            td:nth-child(7) {
+              min-width: 0.1em;
+              font-size: 0.7em;
+            }
+
+            .order-table-image {
+              width: 3em;
+            }
+          }
+
+          .react-bootstrap-table-pagination-total {
+            font-size: 0.5em;
+          }
+        }
+
+        .order-details {
+          .order-item-head {
+            font-size: 0.7em;
+          }
+
+          .shipping-details {
+            font-size: 0.6em;
+          }
+        }
+
+        .total-bill {
+          .total-bill-label {
+            font-size: 0.9em;
+          }
+
+          .total-bill-price {
+            font-size: 0.9em;
+          }
+        }
+      }
+    }
+  }
+}

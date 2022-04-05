@@ -1,0 +1,67 @@
+@import "./../variables";
+
+$sidebar-bg-color: #424242;
+$submenu-bg-color: #c6d4ff;
+$submenu-bg-color-collapsed: rgba(255, 255, 255, 0.95);
+$sidebar-color: white;
+$highlight-color: #ffffff;
+$icon-bg-color: #ffffff;
+$icon-size: 35px;
+@import '~react-pro-sidebar/dist/scss/styles.scss';
+
+.admin-panel {
+  .pro-sidebar {
+    margin-right: 0;
+    height: 110%;
+
+    .pro-sidebar-inner {
+      min-height: 100vh;
+    }
+
+    .pro-menu {
+      .pro-menu-item {
+        .pro-inner-item {
+          margin-right: 1em;
+          margin-left: 1em;
+          margin-bottom: 1em;
+          padding: 0 0;
+          border: solid #ffffff 1px;
+          border-radius: 5px;
+
+          &:hover {
+            background-color: #4caf50;
+          }
+        }
+      }
+    }
+  }
+
+  .sidebar-toggle-btn-col {
+    padding-top: 2px;
+
+    .btn-toggle {
+      vertical-align: center;
+      cursor: pointer;
+      width: 35px;
+      height: 35px;
+      background: $sidebar-bg-color;
+      color: #fff;
+      text-align: center;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      display: none;
+    }
+  }
+}
+
+@media (max-width: $large-device-size) {
+  .admin-panel {
+    .sidebar-toggle-btn-col {
+      .btn-toggle {
+        display: flex;
+      }
+    }
+  }
+}
