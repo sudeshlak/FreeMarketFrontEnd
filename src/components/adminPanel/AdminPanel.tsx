@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {Col, Row, Container} from "react-bootstrap";
 import SideBar from "../sideBar/SideBar";
-import {FaBars} from "react-icons/all";
+
 import AdminRoutes from '../routes/AdminRoutes';
 import MainTopNavBar from "../MainTopNavBar";
 import MainMiddleNavBar from "../MainMiddleNavBar";
 import Footer from "../Footer";
+import {FaBars} from "react-icons/fa6";
 
 const AdminPanel: React.FC = () => {
   const [toggled, setToggled] = useState<boolean>(false);
