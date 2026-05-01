@@ -3,7 +3,7 @@ import {Card} from 'react-bootstrap';
 import BootstrapTable from 'react-bootstrap-table-next';
 import {columns, options} from './OrderItemContant'
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import NumberFormat from 'react-number-format';
+
 import {smallCentsWithPrefix} from "../../util/uiComponents";
 import {IProduct} from "../../types/IProduct";
 import DisplayImage from "../displayImage/DisplayImage";
@@ -12,6 +12,7 @@ import OrderShippingDetails from "./OrderShippingDetails";
 import {IBillingAddress, IOrder} from "../../types/IOrder";
 import Discount from "../checkoutArea/Delivery";
 import {AdminOrderItemTableRow} from "../../types/AdminOrderListType";
+import NumberFormat from "react-number-format";
 
 type OrderItemTableProps = {
   products: IProduct[] | null
@@ -29,7 +30,7 @@ const OrderItemTable: React.FC<OrderItemTableProps> = (props) => {
       return [];
     }
     return products.map((item: IProduct, index: number) => {
-      const itemRow: AdminOrderItemTableRow = {
+      const itemRow: any = {
         key: index + 1,
         id: index + 1,
         Name: item.title,
