@@ -59,7 +59,7 @@ const ContactUs = () => {
         </Row>
       </Container>
       <Footer />
-    <>
+    </>
   )
 };
 
