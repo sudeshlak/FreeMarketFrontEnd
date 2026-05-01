@@ -37,19 +37,19 @@ const OrderItemTable: React.FC<OrderItemTableProps> = (props) => {
         Category: item.category.title,
         Image: <DisplayImage image={item.image} className={'order-table-image'}/>,
         Qty: item.quantity,
-        // UnitPrice: <NumberFormat value={item.regular_price - item.discount_price} thousandSeparator={true}
-        //                          displayType='text'
-        //                          prefix={'Rs. '}
-        //                          decimalScale={2} fixedDecimalScale={true} renderText={smallCentsWithPrefix}
-        // />,
-        // Amount: <NumberFormat value={item.quantity ?
-        //   item.quantity * (item.regular_price - item.discount_price) :
-        //   (item.regular_price - item.discount_price)}
-        //                       thousandSeparator={true}
-        //                       displayType='text'
-        //                       prefix={'Rs. '}
-        //                       decimalScale={2} fixedDecimalScale={true} renderText={smallCentsWithPrefix}
-        // />
+        UnitPrice: <NumberFormat value={item.regular_price - item.discount_price} thousandSeparator={true}
+                                 displayType='text'
+                                 prefix={'Rs. '}
+                                 decimalScale={2} fixedDecimalScale={true} renderText={smallCentsWithPrefix}
+        />,
+        Amount: <NumberFormat value={item.quantity ?
+          item.quantity * (item.regular_price - item.discount_price) :
+          (item.regular_price - item.discount_price)}
+                              thousandSeparator={true}
+                              displayType='text'
+                              prefix={'Rs. '}
+                              decimalScale={2} fixedDecimalScale={true} renderText={smallCentsWithPrefix}
+        />
       };
       return itemRow;
     });

@@ -71,16 +71,16 @@ const AdminProductListTable: React.FC<AdminProductListTableProps> = (props) => {
         name: item.title,
         image: <DisplayImage image={item.image} className={'cart-product-image'}/>,
         qty: <AdminEditableQty item={item}/>,
-        // unitPrice: <NumberFormat value={item.regular_price} thousandSeparator={true} displayType='text'
-        //                          prefix={'Rs. '}
-        //                          decimalScale={2} fixedDecimalScale={true} renderText={smallCentsWithPrefix}
-        // />,
-        // discount: <NumberFormat value={item.discount_price}
-        //                         thousandSeparator={true}
-        //                         displayType='text'
-        //                         prefix={'Rs. '}
-        //                         decimalScale={2} fixedDecimalScale={true} renderText={smallCentsWithPrefix}
-        // />,
+        unitPrice: <NumberFormat value={item.regular_price} thousandSeparator={true} displayType='text'
+                                 prefix={'Rs. '}
+                                 decimalScale={2} fixedDecimalScale={true} renderText={smallCentsWithPrefix}
+        />,
+        discount: <NumberFormat value={item.discount_price}
+                                thousandSeparator={true}
+                                displayType='text'
+                                prefix={'Rs. '}
+                                decimalScale={2} fixedDecimalScale={true} renderText={smallCentsWithPrefix}
+        />,
         editIcon: <Edit size='1.3em' className="edit-btn" color="orange"
                         onClick={() => {
                           props.requestUpdate(item.id)
