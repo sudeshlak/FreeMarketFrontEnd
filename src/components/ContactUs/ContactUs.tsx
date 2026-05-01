@@ -8,7 +8,7 @@ import {MapPin, Mail, Phone} from 'react-feather';
 
 const ContactUs = () => {
   return (
-    <React.Fragment>
+    <>
       <Container fluid={true}>
         <MainTopNavBar/>
       </Container>
@@ -59,7 +59,7 @@ const ContactUs = () => {
         </Row>
       </Container>
       <Footer />
-    </React.Fragment>
+    </>
   )
 };
 

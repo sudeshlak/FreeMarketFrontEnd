@@ -13,9 +13,9 @@
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
-    "@types/react-bootstrap-table-next": "^4.0.15",
-    "@types/react-bootstrap-table2-paginator": "^2.1.2",
-    "@types/react-bootstrap-table2-toolkit": "^2.1.5",
+    "@types/react-bootstrap-table-next": "^4.0.26",
+    "@types/react-bootstrap-table2-paginator": "^2.1.6",
+    "@types/react-bootstrap-table2-toolkit": "^2.1.14",
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.18",
     "@types/react-router-dom": "^5.1.7",
@@ -24,7 +24,6 @@
     "bootstrap": "^5.0.1",
     "graphql": "^15.5.3",
     "moment": "^2.29.1",
-    "node-sass": "^4.14.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-bootstrap-table-next": "^4.0.3",
@@ -39,7 +38,7 @@
     "react-pro-sidebar": "^0.6.0",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "react-scroll": "^1.8.4",
     "react-select": "^4.3.1",
     "react-spinners": "^0.11.0",
@@ -50,6 +49,26 @@
     "sweetalert2": "^11.1.8",
     "typescript": "^4.1.2",
     "web-vitals": "^1.0.1"
+  },
+  "//": "these overrides used due to these packages are not maintained for new versions",
+  "overrides": {
+    "react-bootstrap-table-next": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-bootstrap-table2-paginator": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-bootstrap-table2-toolkit": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    },
+    "react-google-maps": {
+      "react-dom": "$react-dom",
+      "react": "$react",
+      "@types/react": "$@types/react"
+    }
   },
   "scripts": {
     "start": "react-scripts start",
@@ -78,6 +97,7 @@
   "devDependencies": {
     "@types/node-sass": "^4.11.1",
     "@types/react-scroll": "^1.8.3",
-    "@types/react-select": "^4.0.15"
+    "@types/react-select": "^4.0.15",
+    "sass": "^1.99.0"
   }
 }

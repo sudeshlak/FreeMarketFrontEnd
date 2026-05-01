@@ -65,7 +65,7 @@ const AdminProductListTable: React.FC<AdminProductListTableProps> = (props) => {
       return [];
     }
     return props.categorizedItem.map((item: IProduct, index: number) => {
-      const itemRow: AdminProductTableRow = {
+      const itemRow: any = {
         key: item.id,
         index: index + 1,
         name: item.title,
