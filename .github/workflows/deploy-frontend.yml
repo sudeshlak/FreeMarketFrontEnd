@@ -1,4 +1,4 @@
-name: Build and Deploy Frontend
+name: Build and deploy Free-Marcket frontend
 
 on:
   push:
