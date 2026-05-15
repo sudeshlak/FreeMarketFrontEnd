@@ -51,5 +51,5 @@ jobs:
             docker run -d \
               --name fm-frontend \
               --restart unless-stopped \
-              -p 127.0.0.1:3001:3000 \
+              -p 127.0.0.1:3000:3000 \
               ${{ secrets.DOCKERHUB_USERNAME }}/freemarket-frontend:${{ needs.build-and-push.outputs.image_tag }}
