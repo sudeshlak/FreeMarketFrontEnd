@@ -1,4 +1,4 @@
-name: Build and deploy Free-Marcket frontend
+name: Build and deploy FreeMarket frontend
 
 on:
   push:
@@ -45,11 +45,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -e
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/freemarket-frontend:${{ needs.build-and-push.outputs.image_tag }}
-            docker stop fm-frontend || true
-            docker rm fm-frontend || true
-            docker run -d \
-              --name fm-frontend \
-              --restart unless-stopped \
-              -p 127.0.0.1:3001:3000 \
-              ${{ secrets.DOCKERHUB_USERNAME }}/freemarket-frontend:${{ needs.build-and-push.outputs.image_tag }}
+            cd "${{ secrets.EC2_DEPLOY_PATH }}"
+            sed -i "s/^FRONTEND_IMAGE_TAG=.*/FRONTEND_IMAGE_TAG=${{ needs.build-and-push.outputs.image_tag }}/" .env
+            docker compose pull frontend
+            docker compose up -d --remove-orphans frontend
