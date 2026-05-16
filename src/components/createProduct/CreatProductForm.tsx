@@ -201,16 +201,7 @@ const CreateProductForm: React.FC<CreateProductFormProps> = (props) => {
   }
 
   const uploadToS3 = async (putURL: string, file: string, productImageName: string) => {
-    const options = {
-      params: {
-        Key: productImageName,
-        ContentType: "image/jpeg"
-      },
-      headers: {
-        "Content-Type": "image/jpeg"
-      }
-    };
-    return axios.put(putURL, dataURItoBlob(file), options);
+    return axios.put(putURL, dataURItoBlob(file));
   }
 
   const addProductToDatabase = async (productName: string,
