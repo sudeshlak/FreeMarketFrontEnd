@@ -204,10 +204,10 @@ const CreateProductForm: React.FC<CreateProductFormProps> = (props) => {
     const options = {
       params: {
         Key: productImageName,
-        ContentType: 'jpeg'
+        ContentType: "image/jpeg"
       },
       headers: {
-        'Content-Type': 'jpeg'
+        "Content-Type": "image/jpeg"
       }
     };
     return axios.put(putURL, dataURItoBlob(file), options);
