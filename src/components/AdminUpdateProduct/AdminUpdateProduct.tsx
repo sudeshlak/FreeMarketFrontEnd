@@ -354,6 +354,22 @@ const AdminUpdateProduct: React.FC<AdminUpdateProductProps> = (props) => {
             </Form.Group>
 
             <Form.Group as={Col} xs={12} md={6} controlId="price">
+              <Form.Label>Price</Form.Label>
+              <NumberFormat thousandSeparator={true}
+                            className='form-control'
+                            prefix={'Rs. '}
+                            disabled={loading}
+                            value={price ? price : ''}
+                            placeholder=""
+                            onValueChange={(values) => {
+                              handleOnChangePrice(values.floatValue ? values.floatValue : null)
+                            }}
+              />
+              <Row><span className='error-message'>{priceError && priceError}</span></Row>
+            </Form.Group>
+            
+
+            <Form.Group as={Col} xs={12} md={6} controlId="price">
               <Form.Label>Quantity</Form.Label>
               <NumberFormat thousandSeparator={true}
                             className='form-control'
