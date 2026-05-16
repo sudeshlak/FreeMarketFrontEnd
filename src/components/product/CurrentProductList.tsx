@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useMemo} from "react";
 import {IProduct, ISearchedCategory} from "../../types/IProduct";
 import Product from "./Product";
+import {filterProductsByCategory} from "../../util/filterProductsByCategory";
 
 type currentProductListProps = {
   activeCategory: ISearchedCategory
@@ -9,38 +10,22 @@ type currentProductListProps = {
 
 const CurrentProductList: React.FC<currentProductListProps> = (props) => {
   const {activeCategory, products} = props;
-  const [currentProducts, setCurrentProducts] = useState<IProduct[] | null>(null);
 
-  const renderProducts = () => {
-    if (!currentProducts || currentProducts.length === 0) {
-      return;
-    }
-    return currentProducts.map((product: IProduct) => {
-      return <Product key={product.id}
-                      products={product}
-      />
-    });
+  const currentProducts = useMemo(
+    () => filterProductsByCategory(products, activeCategory),
+    [products, activeCategory]
+  );
+
+  if (currentProducts.length === 0) {
+    return null;
   }
-
-  useEffect(() => {
-    if (!products || products.length === 0) {
-      setCurrentProducts(null);
-      return;
-    }
-    if (activeCategory.title === 'Searched') {
-      setCurrentProducts(products.filter(value =>
-        (value.title.toLowerCase().includes(activeCategory.searchedString.toLowerCase()))));
-      return;
-    }
-    setCurrentProducts(products.filter(value => value.category.title === activeCategory.title));
-  }, [products, activeCategory]);
 
   return (
     <React.Fragment>
-      {(currentProducts && activeCategory.title !== "Searched") && <h5>{activeCategory.title}</h5>}
-      {
-        renderProducts()
-      }
+      {activeCategory.title !== "Searched" && <h5>{activeCategory.title}</h5>}
+      {currentProducts.map((product: IProduct) => (
+        <Product key={product.id} products={product} />
+      ))}
     </React.Fragment>
   );
 }

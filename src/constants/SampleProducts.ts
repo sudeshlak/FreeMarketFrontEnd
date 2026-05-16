@@ -158,7 +158,7 @@ export const sampleProducts: IProduct[] = [
     id: '14',
     title: "Electric Oven",
     quantity: 200,
-    category: {id: 4, title: "Eletronic"},
+    category: {id: 4, title: "Electronic"},
     discount_price: 100,
     regular_price: 150,
     image: "https://s3.amazonaws.com/cdn1.shub/electro/electric_oven.jpg"
@@ -167,7 +167,7 @@ export const sampleProducts: IProduct[] = [
     id: '15',
     title: "Electric Oven",
     quantity: 200,
-    category: {id: 4, title: "Eletronic"},
+    category: {id: 4, title: "Electronic"},
     discount_price: 100,
     regular_price: 150,
     image: "https://s3.amazonaws.com/cdn1.shub/electro/electric_oven.jpg"
@@ -176,7 +176,7 @@ export const sampleProducts: IProduct[] = [
     id: '16',
     title: "Electric Oven",
     quantity: 200,
-    category: {id: 4, title: "Eletronic"},
+    category: {id: 4, title: "Electronic"},
     discount_price: 100,
     regular_price: 150,
     image: "https://s3.amazonaws.com/cdn1.shub/electro/electric_oven.jpg"
