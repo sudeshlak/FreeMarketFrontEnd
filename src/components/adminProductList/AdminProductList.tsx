@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Col, Row} from 'react-bootstrap';
+import React, {Suspense, useEffect, useState} from 'react';
+import {Col, Row, Spinner} from 'react-bootstrap';
 import {ICategory, ISearchedCategory} from '../../types/AdminProductListType';
 import {IProduct} from '../../types/IProduct';
 import AdminProductCategoryDropdown from './AdminProductListCategoryDropdown';
 import AdminProductListTable from './AdminProductListTable';
 import {useSelector} from "react-redux";
 import {AppState} from "../../state/reducers";
-import AdminUpdateProduct from '../AdminUpdateProduct/AdminUpdateProduct';
-import AdminUpdateProductPreview from '../AdminUpdateProduct/AdminUpdateProductPreview';
 import {XCircle} from "react-feather";
 import Scroll from "react-scroll";
 import SearchBar from '../adminProductListSearchBar/SearchBar';
@@ -16,6 +14,9 @@ import {changeCategory} from '../../state/actions/AdminProductListActions';
 import {useQuery} from "@apollo/client";
 import {GET_ALL_PRODUCTS} from "../../graphQl/products/productQuery";
 import {setInitProducts} from "../../state/actions/productActions";
+
+const AdminUpdateProduct = React.lazy(() => import('../AdminUpdateProduct/AdminUpdateProduct'));
+const AdminUpdateProductPreview = React.lazy(() => import('../AdminUpdateProduct/AdminUpdateProductPreview'));
 
 const AdminProductList: React.FC = () => {
 
@@ -110,15 +111,16 @@ const AdminProductList: React.FC = () => {
                           </Col>
                       </Row>
                   </Col>
-                  <Col md={6} lg={4} className='update-product-preview pt-2'>
+                  <Suspense fallback={<div className="text-center py-4"><Spinner animation="border"/></div>}>
+                    <Col md={6} lg={4} className='update-product-preview pt-2'>
                       <AdminUpdateProductPreview productName={productName}
                                                  updateToProduct={updateToProduct}
                                                  price={price}
                                                  discount={discount}
                                                  productNewImage={productNewImage}
                       />
-                  </Col>
-                  <Col md={6} lg={8} className='py-3'>
+                    </Col>
+                    <Col md={6} lg={8} className='py-3'>
                       <AdminUpdateProduct closeUpdateSection={handleOnCloseUpdateSection}
                                           updateToProduct={updateToProduct}
                                           productName={productName}
@@ -130,7 +132,8 @@ const AdminProductList: React.FC = () => {
                                           setProductNewImage={setProductNewImage}
                                           productNewImage={productNewImage}
                       />
-                  </Col>
+                    </Col>
+                  </Suspense>
               </Row>
           </React.Fragment>
       }
