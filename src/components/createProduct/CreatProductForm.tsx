@@ -48,9 +48,9 @@ const CreateProductForm: React.FC<CreateProductFormProps> = (props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [srcImg, setSrcImg] = useState<string | null>(null);
   const dispatch = useDispatch();
-  const override = css`
-    margin-left: 20px;
-  `;
+  const override = {
+    marginLeft: "20px"
+  }
 
   const fileChange = (files: FileList|null) => {
     setFileError('');
@@ -353,7 +353,7 @@ const CreateProductForm: React.FC<CreateProductFormProps> = (props) => {
           <Form.Label>Product image</Form.Label>
           {
             loading && <React.Fragment>
-                  <ClipLoader color={'#4caf50'} loading={loading} css={override} size={12}/>
+                  <ClipLoader color={'#4caf50'} loading={loading} cssOverride={override} size={12}/>
                   <label className='uploading-label'>Uploading...</label>
               </React.Fragment>
           }

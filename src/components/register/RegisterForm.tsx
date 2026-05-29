@@ -28,9 +28,10 @@ const RegisterForm: React.FC = () => {
   const [addUser] = useMutation(ADD_USER);
   const [token] = useMutation(TOKEN);
   const dispatch = useDispatch();
-  const override = css`margin-left: 16px;`;
   const [loading, setLoading] = useState<boolean>(false);
-
+  const override = {
+    marginLeft: "16px",
+  };
   const Country: CountrySelect[] = [
     {value: 'United States of America', label: 'United States of America'},
     {value: 'Australia', label: 'Australia'},
@@ -231,7 +232,6 @@ const RegisterForm: React.FC = () => {
           <Form.Group as={Col} xs={12} sm={12} md={4} controlId="formGridCountry" className='select-country'>
             <Form.Label>Country*</Form.Label>
             <Select options={countrySelect}
-                    allowCreateWhileLoading
                     isDisabled={loading}
                     isClearable={false}
                     isSearchable={true}
@@ -298,7 +298,7 @@ const RegisterForm: React.FC = () => {
                  handlePassword={handleOnPasswordChanged}
         />
         <Button variant='success' className='register-btn float-end mt-1' type='submit'>Register
-          <ClipLoader color={'#ffffff'} loading={loading} css={override} size={12}/>
+          <ClipLoader color={'#ffffff'} loading={loading} cssOverride={override} size={12}/>
         </Button>
       </Form>
     </Col>

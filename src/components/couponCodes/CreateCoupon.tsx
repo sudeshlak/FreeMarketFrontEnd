@@ -32,9 +32,9 @@ const CreateCoupon: React.FC<CreateCouponProps> = (props) => {
   const [couponToDateError, setCouponToDateError] = useState<string>('');
   const [couponDiscountPercentageError, setCouponDiscountPercentageError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const override = css`
-    margin-left: 20px;
-  `;
+  const override = {
+    marginLeft: "20px"
+  }
   const handleOnSubmitForm = (event: FormEvent) => {
     event.preventDefault();
     setLoading(true);
@@ -242,7 +242,7 @@ const CreateCoupon: React.FC<CreateCouponProps> = (props) => {
           <Row className='my-2'>
             <Col className='text-end'>
               <Button type='submit' className='btn-success create-coupon-btn'>Create Coupon
-                <ClipLoader color={'#ffffff'} loading={loading} css={override} size={13}/>
+                <ClipLoader color={'#ffffff'} loading={loading} cssOverride={override} size={13}/>
               </Button>
             </Col>
           </Row>
