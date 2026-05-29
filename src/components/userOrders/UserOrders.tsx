@@ -36,7 +36,6 @@ const UserOrders = () => {
               </Col>
               <Col xs={8} sm={3} md={3}>
                 <Select options={status}
-                        allowCreateWhileLoading
                         isClearable={false}
                         isSearchable={true}
                         styles={styleSelect}

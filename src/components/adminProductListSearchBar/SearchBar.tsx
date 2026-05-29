@@ -73,7 +73,6 @@ const SearchBar = () => {
               value={generateCurrentValue()}
               components={{IndicatorsContainer}}
               openMenuOnClick={false}
-              allowCreateWhileLoading
               isSearchable
               isClearable
               onInputChange={(value, action) => {

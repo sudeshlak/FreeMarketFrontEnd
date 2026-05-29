@@ -27,7 +27,6 @@ const AdminProductCategoryDropdown: React.FC<AdminProductListCategoryDropdownPro
         </Col>
         <Col xs={8} sm={8}>
           <Select options={props.categories}
-                  allowCreateWhileLoading
                   isClearable={false}
                   isSearchable={true}
                   styles={styleSelect}

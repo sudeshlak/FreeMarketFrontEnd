@@ -18,7 +18,6 @@ const OrderListDropdown:React.FC<OrderListDropdownProps> = (props) => {
       </Col>
       <Col xs={8} sm={6} md={4} className='pb-2'>
         <Select options={props.status}
-                allowCreateWhileLoading
                 isClearable={false}
                 isSearchable={true}
                 styles={styleSelect}

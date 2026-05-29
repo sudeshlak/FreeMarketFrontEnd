@@ -204,7 +204,6 @@ const BillingAddressForm: React.FC<BillingAddressFormProps> = (props) => {
           <Form.Group as={Col} xs={12} sm={12} md={4} controlId="billingAddressCountry" className='select-country'>
             <Form.Label>Country</Form.Label>
             <Select options={countrySelect}
-                    allowCreateWhileLoading
                     isClearable={false}
                     isSearchable={true}
                     isDisabled={loading}
