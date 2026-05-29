@@ -11,9 +11,10 @@ import {addCoupon, removeCoupon} from "../../state/actions/couponActions";
 import {IAddCoupon} from "../../types/ICoupon";
 import {ClipLoader} from "react-spinners";
 import {css} from "@emotion/react";
-const override = css`
-  margin-left: 5px;
-  margin-top: 2px`;
+const override = {
+  marginLeft: "5px",
+  marginTop: "2px"
+}
 
 const Discount: React.FC = () => {
   const coupon: IAddCoupon|null = useSelector((state: AppState) => state.coupon);
@@ -100,7 +101,7 @@ const Discount: React.FC = () => {
               </Col>
               <Col xs={1} sm={3} md={3} lg={2}>
                 <Button disabled={!(!coupon)} className='discount-apply-btn' type='submit'>APPLY
-                  <ClipLoader color={'#ffffff'} loading={loading} css={override} size={13}/>
+                  <ClipLoader color={'#ffffff'} loading={loading} cssOverride={override} size={13}/>
                 </Button>
               </Col>
             </Row>

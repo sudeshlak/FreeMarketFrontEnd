@@ -181,7 +181,6 @@ const ChangingShippingAddress: React.FC<ChangingShippingAddressProps> = (props) 
           <Form.Group as={Col} xs={12} sm={12} md={4} controlId="formGridCountry" className='select-country'>
             <Form.Label>Country</Form.Label>
             <Select options={countrySelect}
-                    allowCreateWhileLoading
                     isDisabled={loading}
                     isClearable={false}
                     isSearchable={true}

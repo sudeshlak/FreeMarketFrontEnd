@@ -27,7 +27,9 @@ const Login: React.FC = () => {
   const [login] = useMutation(LOGIN);
   const [token] = useMutation(TOKEN);
   const dispatch = useDispatch();
-  const override = css`margin-left: 16px;`;
+  const override = {
+    marginLeft: "16px",
+  };
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleOnEmailChanged = (username: string) => {
@@ -147,7 +149,7 @@ const Login: React.FC = () => {
                 {/*</div>*/}
                 <div className="d-flex justify-content-center mt-3 login_container">
                   <button type="submit" name="button" className="btn login_btn">Login
-                    <ClipLoader color={'#ffffff'} loading={loading} css={override} size={12}/>
+                    <ClipLoader color={'#ffffff'} loading={loading} cssOverride={override} size={12}/>
                   </button>
                 </div>
               </Form>
