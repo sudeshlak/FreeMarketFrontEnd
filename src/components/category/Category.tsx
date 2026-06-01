@@ -37,36 +37,36 @@ const Category: React.FC = () => {
              xs={2} lg={2} md={2} sm={2} xl={2} onClick={() =>
           handleOnChange("All")
         }>
-          <Image id="all" src={allCategoryImage} alt="categoryImage.jpg" height={imgHeight}>
-          </Image><p className="cat-img-p mt-3 text-capitalize">all</p>
+          <img id="all" src={allCategoryImage.src} alt="categoryImage.jpg" height={imgHeight}/>
+          <p className="cat-img-p mt-3 text-capitalize">all</p>
         </Col>
         <Col className={`cat-box cat-img text-center ${(activeCategory.title === "Grocery") ? 'active' : ''}`}
              xs={2} lg={2} md={2} sm={2} xl={2} onClick={() =>
           handleOnChange("Grocery")
         }>
-          <Image src={imgGrocery} alt="categoryImage.jpg" height={imgHeight}>
-          </Image><p className="cat-img-p mt-3 text-capitalize">grocery</p>
+          <img src={imgGrocery.src} alt="categoryImage.jpg" height={imgHeight}/>
+          <p className="cat-img-p mt-3 text-capitalize">grocery</p>
         </Col>
         <Col className={`cat-box cat-img text-center ${(activeCategory.title === "Pharmacy") ? 'active' : ''}`}
              xs={2} lg={2} md={2} sm={2} xl={2} onClick={() =>
           handleOnChange("Pharmacy")
         }>
-          <Image src={imgPharmacy} alt="categoryImage.jpg" height={imgHeight}>
-          </Image><p className="cat-img-p mt-3 text-capitalize">pharmacy</p>
+          <img src={imgPharmacy.src} alt="categoryImage.jpg" height={imgHeight}/>
+          <p className="cat-img-p mt-3 text-capitalize">pharmacy</p>
         </Col>
         <Col className={`cat-box cat-img text-center ${(activeCategory.title === "Food") ? 'active' : ''}`}
              xs={2} lg={2} md={2} sm={2} xl={2} onClick={() =>
           handleOnChange("Food")
         }>
-          <Image src={imgFood} alt="categoryImage.jpg" height={imgHeight}>
-          </Image><p className="cat-img-p mt-3 text-capitalize">food</p>
+          <img src={imgFood.src} alt="categoryImage.jpg" height={imgHeight}/>
+          <p className="cat-img-p mt-3 text-capitalize">food</p>
         </Col>
         <Col className={`cat-box cat-img text-center ${(activeCategory.title === "Electronic") ? 'active' : ''}`}
              xs={2} lg={2} md={2} sm={2} xl={2} onClick={() =>
           handleOnChange("Electronics")
         }>
-          <Image src={imgElectronics} alt="categoryImage.jpg" height={imgHeight}>
-          </Image><p className="cat-img-p mt-3 text-capitalize">electronic</p>
+          <img src={imgElectronics.src} alt="categoryImage.jpg" height={imgHeight}/>
+          <p className="cat-img-p mt-3 text-capitalize">electronic</p>
         </Col>
       </Row>
     </Col>

@@ -1,19 +1,25 @@
-import {Form, Button, Col, Row} from "react-bootstrap";
-import React, {useState} from "react";
+import { Form, Button, Col, Row } from "react-bootstrap";
+import React, { useState } from "react";
 import "react-image-crop/dist/ReactCrop.css";
-import ReactCrop, {Crop} from "react-image-crop";
-import {toast} from "../sweetalert/sweetalert";
+import ReactCrop, { Crop } from "react-image-crop";
+import { toast } from "../sweetalert/sweetalert";
 
 type ImageCropProps = {
-  srcImg: string | null
-  setProductImage: (productImage: string | null) => void
-  cropImageError: string
-  setCropImageError: (cropImageError: string) => void
-}
-const ImageCrop: React.FC<ImageCropProps> = (props) => {
-
+  srcImg: string | null;
+  setProductImage: (productImage: string | null) => void;
+  cropImageError: string;
+  setCropImageError: (cropImageError: string) => void;
+};
+const ImageCrop: React.FC<imgCropProps> = (props) => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [crop, setCrop] = useState<Crop>({height: 0, unit: 'px', width: 0, x: 0, y: 0, aspect: 1});
+  const [crop, setCrop] = useState<Crop>({
+    height: 0,
+    unit: "px",
+    width: 0,
+    x: 0,
+    y: 0,
+    aspect: 1,
+  });
 
   const getCroppedImg = async () => {
     try {
@@ -38,48 +44,46 @@ const ImageCrop: React.FC<ImageCropProps> = (props) => {
         0,
         0,
         crop.width,
-        crop.height
+        crop.height,
       );
       const base64Image: string = canvas.toDataURL("image/jpeg", 1);
       if (crop?.width <= 0 || crop?.height <= 0) {
-        props.setCropImageError('Please make selection before set image');
+        props.setCropImageError("Please make selection before set image");
         return;
       }
       props.setProductImage(base64Image);
     } catch (e) {
-      toast('Failed to crop Image', '', 'error');
+      toast("Failed to crop Image", "", "error");
     }
   };
 
   return (
     <Form.Group className="mb-3 text-center" controlId="formBasicCropImage">
       {props.srcImg && (
-        <Row className='image-crop mx-1'>
-          <Col xs={12} className='mt-1'>
+        <Row className="image-crop mx-1">
+          <Col xs={12} className="mt-1">
             <ReactCrop
-              style={{maxWidth: "50%"}}
+              style={{ maxWidth: "50%" }}
               src={props.srcImg}
               onImageLoaded={setImage}
               crop={crop}
               onChange={setCrop}
             />
           </Col>
-          <Col xs={12} className='mb-1'>
-            <Button className="btn-secondary" size='sm' onClick={getCroppedImg}>
+          <Col xs={12} className="mb-1">
+            <Button className="btn-secondary" size="sm" onClick={getCroppedImg}>
               Set Image
             </Button>
           </Col>
-          {
-            props.cropImageError &&
-              <Col className='px-0'>
-                  <span className='error-message'>{props.cropImageError}</span>
-              </Col>
-          }
-
+          {props.cropImageError && (
+            <Col className="px-0">
+              <span className="error-message">{props.cropImageError}</span>
+            </Col>
+          )}
         </Row>
       )}
     </Form.Group>
   );
-}
+};
 
 export default ImageCrop;

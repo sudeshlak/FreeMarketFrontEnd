@@ -463,7 +463,7 @@ const AdminUpdateProduct: React.FC<AdminUpdateProductProps> = (props) => {
               </span>
             </Row>
           </Form.Group>
-          <ImageCrop
+          <imgCrop
             srcImg={srcImg}
             setProductImage={setProductNewImage}
             cropImageError={cropImageError}

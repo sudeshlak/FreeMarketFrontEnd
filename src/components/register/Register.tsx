@@ -1,5 +1,5 @@
 import React from "react";
-import {Col, Container, Image, Row} from "react-bootstrap";
+import { Col, Container, Image, Row } from "react-bootstrap";
 import MainTopNavBar from "../MainTopNavBar";
 import MainMiddleNavBar from "../MainMiddleNavBar";
 import ShoppingAreaNavBar from "../shoppingAreaNavBar/ShoppingAreaNavBar";
@@ -11,22 +11,23 @@ const Register: React.FC = () => {
   return (
     <React.Fragment>
       <Container fluid={true}>
-        <MainTopNavBar/>
+        <MainTopNavBar />
       </Container>
-      <MainMiddleNavBar/>
-      <ShoppingAreaNavBar/>
+      <MainMiddleNavBar />
+      <ShoppingAreaNavBar />
       <Container>
-        <Row className='register'>
-          <Col xs={12} sm={12} md={6} className='register-img'>
-            <Image className="w-100 mt-4"
-                 src={RegisterImage}
-                 alt="register image"
+        <Row className="register">
+          <Col xs={12} sm={12} md={6} className="register-img">
+            <img
+              className="w-100 mt-4"
+              src={RegisterImage.src}
+              alt="register image"
             />
           </Col>
-          <RegisterForm/>
+          <RegisterForm />
         </Row>
       </Container>
-      <Footer/>
+      <Footer />
     </React.Fragment>
   );
 };

@@ -1,5 +1,3 @@
-import React from 'react';
-import './App.scss'
 import ClientApp from "./ClientApp";
 import client from "./apollo/apollo";
 import {Provider} from 'react-redux';
