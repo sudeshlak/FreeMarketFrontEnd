@@ -4,7 +4,7 @@ import {ICoupon} from "../../types/ICoupon";
 
 type CouponPreviewProps = {
   coupon: ICoupon
-  handleOnDeleteCoupon: (id: string, title: string) => void
+  handleOnDeleteCoupon?: (id: string, title: string) => void
 }
 const CouponPreview: React.FC<CouponPreviewProps> = (props) => {
   const {coupon, handleOnDeleteCoupon} = props;
@@ -16,7 +16,7 @@ const CouponPreview: React.FC<CouponPreviewProps> = (props) => {
           <Row className='pt-2'>
             <Col className='coupon-preview-delete-btn-col text-end'>
               <Button className='coupon-preview-delete-btn btn-danger'
-                      onClick={() => handleOnDeleteCoupon(coupon.id, coupon.title)}
+                      onClick={() => handleOnDeleteCoupon?.(coupon.id, coupon.title)}
                       size='sm'>Delete</Button>
             </Col>
           </Row>
