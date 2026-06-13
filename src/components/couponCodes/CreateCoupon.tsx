@@ -32,13 +32,15 @@ const CreateCoupon: React.FC<CreateCouponProps> = (props) => {
       setLoading(false);
       return;
     }
+    const { error: _fromDateError, ...fromDate } = couponState.fromDate;
+    const { error: _toDateError, ...toDate } = couponState.toDate;
     try {
       await addCoupon({
         variables: {
           newCoupon: {
             title: couponState.title.value,
-            fromDate: couponState.fromDate.stringDate,
-            toDate: couponState.toDate.stringDate,
+            fromDate: fromDate,
+            toDate: toDate,
             discountPercentage: couponState.discountPercentage.value,
             couponCode: couponState.couponCode.value,
           },
