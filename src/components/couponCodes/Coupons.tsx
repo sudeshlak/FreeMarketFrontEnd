@@ -15,17 +15,20 @@ const Coupons = () => {
   const { refetch } = useQuery(GET_ALL_COUPONS);
   const [deleteCoupon] = useMutation(DELETE_COUPON);
 
+  async function fetchCoupons() {
+    try {
+      const response = await refetch();
+      if (response.data) {
+        setCoupons(response.data.getAllCoupons);
+      }
+    } catch (error) {
+      toast("Failed to load coupons", "", "error");
+    }
+  }
+
   useEffect(() => {
-    refetch()
-      .then(({ data }) => {
-        if (data) {
-          setCoupons(data.getAllCoupons);
-        }
-      })
-      .catch((error) => {
-        toast("Failed to load coupons", "", "error");
-      });
-  }, [refetch]);
+    fetchCoupons();
+  }, [fetchCoupons]);
 
   const renderCoupons = () => {
     if (!coupons) {
@@ -49,32 +52,19 @@ const Coupons = () => {
       "No",
       "You won't be able to revert this!",
       "question",
-    ).then(({ isConfirmed }) => {
+    ).then(async ({ isConfirmed }) => {
       if (isConfirmed) {
-        deleteCoupon({
-          variables: {
-            id: id,
-          },
-        })
-          .then(async ({ data }) => {
-            if (data) {
-              if (coupons) {
-                setCoupons(
-                  coupons.filter((coupon: ICoupon) => {
-                    return coupon.id !== data.deleteCoupon.id;
-                  }),
-                );
-              }
-              toast(
-                "Coupon :" + data.deleteCoupon.title + " deleted successfully",
-                "",
-                "success",
-              );
-            }
-          })
-          .catch((error) => {
-            toast("Failed to delete Coupon", "", "error");
+        try {
+          await deleteCoupon({
+            variables: {
+              id: id,
+            },
           });
+          toast("Coupon deleted successfully", "", "success");
+          fetchCoupons();
+        } catch (error) {
+          toast("Failed to delete Coupon", "", "error");
+        }
       }
     });
   };
@@ -84,7 +74,7 @@ const Coupons = () => {
       <Col className="coupons">
         <Row>
           <CouponCreateProvider>
-            <CreateCoupon setCoupons={setCoupons} coupons={coupons} />
+            <CreateCoupon fetchCoupons={fetchCoupons} />
             <SampleCouponPreview />
           </CouponCreateProvider>
         </Row>
