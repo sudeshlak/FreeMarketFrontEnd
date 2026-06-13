@@ -1,8 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import NumberFormat from "react-number-format";
-import { ICoupon, ICouponState, IDate } from "../../types/ICoupon";
-import { css } from "@emotion/react";
+import { ICouponState } from "../../types/ICoupon";
 import { ClipLoader } from "react-spinners";
 import { useMutation } from "@apollo/client";
 import { CREATE_COUPON } from "../../graphQl/coupon/couponMutation";
@@ -13,13 +12,12 @@ import {
 } from "./couponContext";
 
 type CreateCouponProps = {
-  setCoupons: (coupon: ICoupon[] | null) => void;
-  coupons: ICoupon[] | null;
+  fetchCoupons: () => void;
 };
 const CreateCoupon: React.FC<CreateCouponProps> = (props) => {
   const dispatch = useCouponCreateDispatchContext();
   const couponState: ICouponState | null = useCouponCreateContext();
-  const { setCoupons, coupons } = props;
+  const { fetchCoupons } = props;
   const [addCoupon] = useMutation(CREATE_COUPON);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -27,37 +25,32 @@ const CreateCoupon: React.FC<CreateCouponProps> = (props) => {
     marginLeft: "20px",
   };
 
-  const handleOnSubmitForm = (event: FormEvent) => {
+  const handleOnSubmitForm = async (event: FormEvent) => {
     event.preventDefault();
     setLoading(true);
     if (!validateForm()) {
       setLoading(false);
       return;
     }
-    addCoupon({
-      variables: {
-        newCoupon: {
-          title: couponState.title.value,
-          fromDate: couponState.fromDate,
-          toDate: couponState.toDate,
-          discountPercentage: couponState.discountPercentage.value,
-          couponCode: couponState.couponCode.value,
+    try {
+      await addCoupon({
+        variables: {
+          newCoupon: {
+            title: couponState.title.value,
+            fromDate: couponState.fromDate.stringDate,
+            toDate: couponState.toDate.stringDate,
+            discountPercentage: couponState.discountPercentage.value,
+            couponCode: couponState.couponCode.value,
+          },
         },
-      },
-    })
-      .then(({ data }) => {
-        if (!coupons) {
-          setCoupons([data.addCoupon]);
-        } else {
-          setCoupons([...coupons, data.addCoupon]);
-        }
-        setLoading(false);
-        clearForm();
-      })
-      .catch((error) => {
-        toast("Failed to create Coupon", "", "error");
-        setLoading(false);
       });
+      clearForm();
+      setLoading(false);
+      fetchCoupons();
+    } catch (error) {
+      toast("Failed to create Coupon", "", "error");
+      setLoading(false);
+    }
   };
 
   const clearForm = () => {
