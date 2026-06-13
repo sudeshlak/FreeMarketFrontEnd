@@ -28,7 +28,7 @@ const Coupons = () => {
 
   useEffect(() => {
     fetchCoupons();
-  }, [fetchCoupons]);
+  }, []);
 
   const renderCoupons = () => {
     if (!coupons) {
