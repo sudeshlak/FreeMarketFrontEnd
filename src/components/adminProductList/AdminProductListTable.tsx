@@ -54,7 +54,7 @@ const AdminProductListTable: React.FC<AdminProductListTableProps> = (props) => {
   const ifEmpty = () => {
     return (
       <div className="checkout-table-empty-cart text-center">
-        <img src={emptyProduct} alt="Empty"/>
+        <img src={emptyProduct.src} alt="Empty"/>
         <p>Category: {props.activeCategory.title} is empty</p>
       </div>
     )

@@ -1,3 +1,5 @@
+@use "../variables" as *;
+
 @mixin order-item-list($font_color) {
   .order-div {
     border: solid 1px $font_color;

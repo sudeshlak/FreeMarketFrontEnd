@@ -1,4 +1,4 @@
-@import "../variables";
+@use "../variables" as *;
 
 $rounded-corners: true;
 $add-to-cart-btn: #4caf50;

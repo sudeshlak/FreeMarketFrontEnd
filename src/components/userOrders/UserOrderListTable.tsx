@@ -23,7 +23,7 @@ const UserOrderListTable: React.FC<OrderListProps> = (props) => {
     return (
       <div>
         <div className="checkout-table-empty-cart text-center">
-          <img src={emptyOrder} alt="Empty"/>
+          <img src={emptyOrder.src} alt="Empty"/>
           <p>Status: {props.activeStatus.label} orders are empty</p>
         </div>
       </div>
@@ -54,7 +54,7 @@ const UserOrderListTable: React.FC<OrderListProps> = (props) => {
         return {
           key: order.id,
           OrderNo: order.orderCode,
-          Image: <Image src={Image2} width="50%" height="30px" alt="ad" roundedCircle/>,
+          Image: <Image src={Image2.src} width="50%" height="30px" alt="ad" roundedCircle/>,
           OrderDate: order.requestedDate,
           OrderTotal: <OrderListTotal discountPercentage={order.discountPercentage} productList={order.productList}/>,
           State: order.status.charAt(0).toUpperCase() + order.status.slice(1),
@@ -68,7 +68,7 @@ const UserOrderListTable: React.FC<OrderListProps> = (props) => {
           return {
             key: order.id,
             OrderNo: order.orderCode,
-            Image: <Image src={Image2} width="50%" height="30px" alt="ad" roundedCircle/>,
+            Image: <Image src={Image2.src} width="50%" height="30px" alt="ad" roundedCircle/>,
             OrderDate: order.requestedDate,
             State: order.status.charAt(0).toUpperCase() + order.status.slice(1),
             OrderTotal: <OrderListTotal discountPercentage={order.discountPercentage} productList={order.productList}/>,

@@ -19,7 +19,7 @@ const Register: React.FC = () => {
         <Row className='register'>
           <Col xs={12} sm={12} md={6} className='register-img'>
             <Image className="w-100 mt-4"
-                 src={RegisterImage}
+                 src={RegisterImage.src}
                  alt="register image"
             />
           </Col>

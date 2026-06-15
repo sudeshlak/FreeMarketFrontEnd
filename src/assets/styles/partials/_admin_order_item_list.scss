@@ -1,4 +1,4 @@
-@import "../variables";
+@use "../variables" as *;
 
 @mixin order-item-list($font_color) {
   border: solid 1px $font_color;

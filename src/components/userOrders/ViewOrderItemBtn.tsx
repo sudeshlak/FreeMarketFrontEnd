@@ -13,7 +13,7 @@ const ViewOrderItemBtn: React.FC = () => {
   return (
     <React.Fragment>
     <div className='view-order-button-div' onClick={handleOnViewOrderClick}>
-      <Col xs={12}><Image src={processingOrder} className='view-order-button'/></Col>
+      <Col xs={12}><Image src={processingOrder.src} className='view-order-button'/></Col>
     </div>
   </React.Fragment>
   )
