@@ -37,7 +37,7 @@ const Category: React.FC = () => {
              xs={2} lg={2} md={2} sm={2} xl={2} onClick={() =>
           handleOnChange("All")
         }>
-          <Image id="all" src={allCategoryImage} alt="categoryImage.jpg" height={imgHeight}>
+          <Image id="all" src={allCategoryImage.src} alt="categoryImage.jpg" height={imgHeight}>
           </Image><p className="cat-img-p mt-3 text-capitalize">all</p>
         </Col>
         <Col className={`cat-box cat-img text-center ${(activeCategory.title === "Grocery") ? 'active' : ''}`}

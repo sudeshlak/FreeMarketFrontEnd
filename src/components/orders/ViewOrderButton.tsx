@@ -20,11 +20,11 @@ const ViewOrderButton: React.FC<ViewOrderButtonProps> = (props) => {
 
   const renderViewOrderButton = React.useCallback(() => {
     if (status === 'requested') {
-      return processingOrder
+      return processingOrder.src
     } else if (status === 'approved') {
-      return approvedOrder
+      return approvedOrder.src
     } else {
-      return rejectedOrder
+      return rejectedOrder.src
     }
   }, [status]);
 

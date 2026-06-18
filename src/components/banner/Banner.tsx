@@ -9,13 +9,14 @@ const Banner: React.FC = () => {
       <Carousel prevLabel={null}
                 nextLabel={null}
                 interval={null}
+                activeIndex={1}
                 className="px-0 pt-3 pb-4 w-100"
                 indicators={false}>
         <Carousel.Item>
           <div className="w-100 banner-image">
             <img
               className="w-100"
-              src={WelcomeImage}
+              src={WelcomeImage.src}
               alt="Second slide"
             />
             <Button className="btn">Shop Now</Button>
@@ -24,14 +25,14 @@ const Banner: React.FC = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src={WelcomeImage}
+            src={WelcomeImage.src}
             alt="First slide"
           />
         </Carousel.Item>
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src={WelcomeImage}
+            src={WelcomeImage.src}
             alt="Third slide"
           />
         </Carousel.Item>

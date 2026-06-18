@@ -38,7 +38,7 @@ const CheckoutArea: React.FC = () => {
   const ifEmpty = () => {
     return (
       <div className="checkout-table-empty-cart text-center">
-        <img src={emptyCartIcon} alt="empty cart"/>
+        <img src={emptyCartIcon.src} alt="empty cart"/>
         <p>Your Cart is empty</p>
         <label>Add items to your cart :)</label>
       </div>

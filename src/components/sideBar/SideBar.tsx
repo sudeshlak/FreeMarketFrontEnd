@@ -12,7 +12,7 @@ const SideBar: React.FC<SideBarProps> = (props) => {
 
   return (
     <ProSidebar image={undefined} rtl={false} collapsed={false} toggled={toggled} breakPoint="lg"
-                onToggle={(value) => handleToggleSidebar(value)}>
+                onToggle={(value) => handleToggleSidebar(Boolean(value))}>
       <SidebarHeader className='py-4'>
       </SidebarHeader>
       <SidebarContent>

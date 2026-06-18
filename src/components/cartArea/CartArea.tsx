@@ -23,7 +23,7 @@ const CartArea: React.FC = () => {
     if (!cartItems || cartItems.length === 0) {
       return (
         <div className='empty-cart'>
-          <Col xs={12} className='px-4 text-center'><Image src={emptyCart} className='empty-cart-image'/></Col>
+          <Col xs={12} className='px-4 text-center'><Image src={emptyCart.src} className='empty-cart-image'/></Col>
           <Col xs={12} className='empty-cart-row-1'>Your Cart is empty</Col>
           <Col xs={12} className='empty-cart-row-2'>Add items to your cart :)</Col>
         </div>
