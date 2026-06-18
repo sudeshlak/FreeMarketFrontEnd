@@ -1,4 +1,4 @@
-@import "./../variables";
+@use "./../variables" as *;
 
 $sidebar-bg-color: #424242;
 $submenu-bg-color: #c6d4ff;
@@ -7,7 +7,7 @@ $sidebar-color: white;
 $highlight-color: #ffffff;
 $icon-bg-color: #ffffff;
 $icon-size: 35px;
-@import '~react-pro-sidebar/dist/scss/styles.scss';
+@use 'react-pro-sidebar/dist/scss/styles.scss';
 
 .admin-panel {
   .pro-sidebar {

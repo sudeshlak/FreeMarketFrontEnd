@@ -1,4 +1,4 @@
-@import "../variables";
+@use "../variables" as *;
 
 .main-middle-nav-bar {
   border-top: 1px #CCC solid;
