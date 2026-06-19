@@ -14,7 +14,7 @@ const OrderListItem = [
     {
         id: 1,
         OrderNo: '0001',
-        Image: <Image src ={Image2} width="50%" height="30px" alt = "ad" roundedCircle/>,
+        Image: <Image src ={Image2.src} width="50%" height="30px" alt = "ad" roundedCircle/>,
         OrderDate: new Date().toDateString(),
         OrderTotal:<NumberFormat value={1568.00}
                                  thousandSeparator={true}
@@ -29,7 +29,7 @@ const OrderListItem = [
     {
         id: 2,
         OrderNo: '0002',
-        Image: <Image src ={Image2} width="50%" height="30px" alt = "ad" roundedCircle/>,
+        Image: <Image src ={Image2.src} width="50%" height="30px" alt = "ad" roundedCircle/>,
         OrderDate: new Date().toDateString(),
         OrderTotal:<NumberFormat value={1568.00}
                                  thousandSeparator={true}
@@ -44,7 +44,7 @@ const OrderListItem = [
     {
         id: 3,
         OrderNo: '0003',
-        Image: <Image src ={Image2} width="50%" height="30px" alt = "ad" roundedCircle/>,
+        Image: <Image src ={Image2.src} width="50%" height="30px" alt = "ad" roundedCircle/>,
         OrderDate: new Date().toDateString(),
         OrderTotal:<NumberFormat value={1568.00}
                                  thousandSeparator={true}
@@ -59,7 +59,7 @@ const OrderListItem = [
     {
         id: 4,
         OrderNo: '0004',
-        Image: <Image src ={Image2} width="50%" height="30px" alt = "ad" roundedCircle/>,
+        Image: <Image src ={Image2.src} width="50%" height="30px" alt = "ad" roundedCircle/>,
         OrderDate: new Date().toDateString(),
         OrderTotal:<NumberFormat value={1568.00}
                                  thousandSeparator={true}
@@ -74,7 +74,7 @@ const OrderListItem = [
     {
         id: 5,
         OrderNo: '0005',
-        Image: <Image src ={Image2} width="50%" height="30px" alt = "ad" roundedCircle/>,
+        Image: <Image src ={Image2.src} width="50%" height="30px" alt = "ad" roundedCircle/>,
         OrderDate: new Date().toDateString(),
         OrderTotal:<NumberFormat value={1568.00}
                                  thousandSeparator={true}
