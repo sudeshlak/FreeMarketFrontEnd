@@ -19,3 +19,10 @@ export const GET_ALL_PRODUCTS = gql`
         image
     }
 `
+export const SEARCH_PRODUCTS = gql`
+  query searchProducts($search: String!) {
+    getAllProducts(search: $search) {
+      title
+    }
+  }
+`;
