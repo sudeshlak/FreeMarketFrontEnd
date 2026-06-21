@@ -10,3 +10,18 @@ export function debounce<T extends (...args: any[]) => any>(
       }, delay);
     };
 }
+
+export function throttle<T extends (...args: any[]) => any>(
+    func: T,
+    gap: number
+  ): (...args: Parameters<T>) => void {
+    let inThrottle = false;
+    return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+      if (inThrottle) return;
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => {
+        inThrottle = false;
+      }, gap);
+    };
+  }
