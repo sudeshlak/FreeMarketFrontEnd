@@ -1,0 +1,59 @@
+@use "../variables" as *;
+
+@mixin coupon-preview($backgroundColor) {
+    .coupon-preview {
+        border: dashed 1px #1e7e34;
+        border-radius: 10px;
+        box-shadow: 0 0 0 5px #a4ffa1;
+        background-color: $backgroundColor;
+    
+        .coupon-preview-delete-btn {
+            font-size: 0.6em;
+        }
+    
+        .coupon-discount-percentage {
+            color: #1e7e34;
+            font-size: 2em;
+            font-weight: 600;
+        }
+    
+        .coupon-preview-dates-row {
+            .coupon-preview-dates-text {
+            font-size: 0.5em;
+            background-color: #1e7e34;
+            color: white;
+            border: 4px solid white;
+            margin-left: 3px;
+            text-align: center;
+            padding-top: 2px;
+            font-weight: bold;
+            }
+    
+            .coupon-preview-dates-col {
+            font-size: 0.8em;
+            padding-top: 2px;
+            }
+        }
+    
+        .coupon-preview-title-col {
+            background-color: #1e7e34;
+            color: white;
+        }
+    
+        .coupon-code-col {
+            background-color: #1e7e34;
+            color: white;
+            font-weight: 600;
+        }
+    }
+}
+
+@mixin coupon-preview-mobile {
+    .coupon-preview {
+        .coupon-preview-dates-row {
+            .coupon-preview-dates-col {
+                padding-top: 4px;
+            }
+        }
+    }
+}

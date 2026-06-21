@@ -1,0 +1,24 @@
+@use "./coupon_preview" as *;
+@use "../variables" as *;
+
+.coupons-model{
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background-color: #1e7e345f;
+    display: flex;
+    flex-direction: column;
+    align-items: center;      // horizontal center
+    justify-content: center;  // vertical center
+    @include coupon-preview(white);
+    .title {
+        color: white;
+        font-weight: bolder;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px#001505;
+    }
+}
+
+@media only screen and (max-width: $medium-device-size){
+    @include coupon-preview-mobile;
+}
