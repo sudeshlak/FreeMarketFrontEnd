@@ -2,11 +2,11 @@ import React, {useEffect} from "react";
 import {Alert, Spinner} from "react-bootstrap";
 import SearchBar from "./searchBar/SearchBar";
 import Categories from "./category/Categories";
-import ProductArea from "./product/ProductArea";
 import {useDispatch} from "react-redux";
 import {useQuery} from "@apollo/client";
 import {GET_ALL_PRODUCTS} from "../graphQl/products/productQuery";
 import {setInitProducts} from "../state/actions/productActions";
+import ProductList from "./product/ProductList";
 
 const ShoppingArea: React.FC = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const ShoppingArea: React.FC = () => {
       )}
       {!loading && !error && (
         <div className="row product-area-container">
-          <ProductArea/>
+          <ProductList/>
         </div>
       )}
     </div>
