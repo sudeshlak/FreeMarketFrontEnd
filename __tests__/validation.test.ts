@@ -33,7 +33,7 @@ describe("validation", () => {
     expect(isNotEmpty("  ")).toBeFalsy();
   });
 
-  it("calculate strength of password", () => {
+  it("Calculate strength of password", () => {
     expect(calcStrength(" ")).toBe(0);
     expect(calcStrength("1")).toBe(1);
     expect(calcStrength("1@Aa")).toBe(3);
