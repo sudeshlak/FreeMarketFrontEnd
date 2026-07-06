@@ -3,6 +3,7 @@ import { renderWithRedux } from "../src/util/testUtils";
 import React from "react";
 import ChangingShippingAddress from "../src/components/shoppingFormArea/ChangingShippingAddress";
 import { screen } from "@testing-library/react";
+import '@testing-library/jest-dom';
 
 describe("Changing shipping address", () => {
   it("Name valid", async () => {
