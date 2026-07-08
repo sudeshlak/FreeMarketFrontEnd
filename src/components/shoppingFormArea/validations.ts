@@ -1,22 +1,22 @@
-export const validateEmail = (email: string): boolean => {
-    const regEx:RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return regEx.test(email.trim());
-};
+const createPatternValidator = (pattern: RegExp, value: string) =>
+  pattern.test(value);
 
-export const validateOnlyLetters = (string:string):boolean => {
-    const regEx:RegExp = /^[A-Za-z\s]+$/;
-    return regEx.test(string.trim());
-};
+export const validateEmail = createPatternValidator.bind(
+    this, 
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+);
 
-export const validateOnlyNumbers = (string:string) => {
-    const regEx:RegExp = /^[0-9]+$/;
-    return regEx.test(string.trim());
-};
+export const validateOnlyLetters = createPatternValidator.bind(
+    this, /^[A-Za-z\s]+$/
+);
 
-export const validateOnlyNumbersAndLetters = (string:string) => {
-  const regEx:RegExp = /^[,a-zA-Z0-9\s]+$/;
-  return regEx.test(string.trim());
-};
+export const validateOnlyNumbers = createPatternValidator.bind(
+    this, /^[0-9]+$/
+);
+
+export const validateOnlyNumbersAndLetters = createPatternValidator.bind(
+    this, /^[,a-zA-Z0-9\s]+$/
+);
 
 export const isNotEmpty = (string:string) => {
   return !(string.trim() === '');
