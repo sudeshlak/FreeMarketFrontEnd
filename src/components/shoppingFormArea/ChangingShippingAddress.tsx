@@ -46,7 +46,7 @@ const ChangingShippingAddress: React.FC<ChangingShippingAddressProps> = (props) 
 
   const handleOnChangePostalCode = (postalCode: string) => {
     dispatch(changeFormData({key: 'otherAddressPostelCode', value: postalCode}));
-    if (!isNotEmpty(postalCode)) {
+    if (!validateOnlyNumbersAndLetters(postalCode)) {
       dispatch(changeFormData({key: 'otherAddressPostelCodeError', value: 'Enter valid postal code'}));
       return;
     }
