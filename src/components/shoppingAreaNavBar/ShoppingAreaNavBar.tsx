@@ -1,31 +1,14 @@
 import React from "react";
 import {Navbar, Row, Nav, NavDropdown, Container} from "react-bootstrap";
-import {changeCategory} from "../../state/actions/categorizeProdcutsActions";
 import {useDispatch} from "react-redux";
-import Scroll from "react-scroll";
 import {Link} from "react-router-dom";
+import { dispatchSelectedCategory } from "../category/dispatchSelectedcategoryHandler";
+import { ALL_CATEGORY, ELECTRONIC_CATEGORY, FOOD_CATEGORY, GROCERY_CATEGORY, PHARMACY_CATEGORY } from "../../constants/productCategories";
 
 const ShoppingAreaNavBar: React.FC = () => {
+
   const dispatch = useDispatch();
-
-  const handleOnChange = (category: string) => {
-    Scroll.scroller.scrollTo("products", {
-      smooth: false,
-      offset: -140,
-    });
-
-    if (category === "All") {
-      dispatch(changeCategory({id: 1, title: "All", searchedString: ''}));
-    } else if (category === "Grocery") {
-      dispatch(changeCategory({id: 2, title: "Grocery", searchedString: ''}));
-    } else if (category === "Pharmacy") {
-      dispatch(changeCategory({id: 3, title: "Pharmacy", searchedString: ''}));
-    } else if (category === "Food") {
-      dispatch(changeCategory({id: 4, title: "Food", searchedString: ''}));
-    } else if (category === "Electronics") {
-      dispatch(changeCategory({id: 5, title: "Electronic", searchedString: ''}));
-    }
-  };
+  const onSelectCategory = dispatchSelectedCategory(dispatch);
 
   return (
     <Container className="shopping-area">
@@ -36,23 +19,23 @@ const ShoppingAreaNavBar: React.FC = () => {
             <Nav className="me-auto">
               <NavDropdown className='nav-drop-down' title="Categories" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1" onSelect={() => {
-                  handleOnChange("All")
+                  onSelectCategory(ALL_CATEGORY)
                 }}
                 >All</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2" onSelect={() => {
-                  handleOnChange("Grocery")
+                  onSelectCategory(GROCERY_CATEGORY)
                 }}
                 >Grocery</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.3" onSelect={() => {
-                  handleOnChange("Pharmacy")
+                  onSelectCategory(PHARMACY_CATEGORY)
                 }}
                 >Pharmacy</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.4" onSelect={() => {
-                  handleOnChange("Food")
+                  onSelectCategory(FOOD_CATEGORY)
                 }}
                 >Food</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.5" onSelect={() => {
-                  handleOnChange("Electronics")
+                  onSelectCategory(ELECTRONIC_CATEGORY)
                 }}
                 >Electronic</NavDropdown.Item>
               </NavDropdown>

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import React from "react";
 import { renderWithRedux } from "../src/util/testUtils";
 import SearchBar from "../src/components/adminProductListSearchBar/SearchBar";
@@ -19,7 +19,9 @@ describe("Search Bar", () => {
       it("category change search bar", async () => {
         const user = userEvent.setup();
         const { store } = renderWithRedux(<SearchBar />);
-        store.dispatch(setInitProducts([mockProduct]));
+        act(() => {
+            store.dispatch(setInitProducts([mockProduct]));
+        });
         const searchBar = screen.getByRole("combobox");
         await user.type(searchBar, "Apple");
         await user.click(await screen.findByRole("option", { name: "Apple" }));
