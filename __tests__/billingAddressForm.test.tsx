@@ -12,7 +12,7 @@ describe("Billing address form", () => {
     const fullNameInput = screen.getByPlaceholderText("Your Full Name");
 
     await user.type(fullNameInput, "John Doe");
-    expect(store.getState().shippingForm.fullName).toBe("John Doe");
+    expect(store.getState().shippingForm.fullName).toBe("John Does");
     expect(store.getState().shippingForm.fullNameError).toBe("");
   });
   it("Full name invalid", async () => {
