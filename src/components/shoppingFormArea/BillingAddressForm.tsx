@@ -94,7 +94,7 @@ const BillingAddressForm: React.FC<BillingAddressFormProps> = (props) => {
 
   const handleOnPostalCodeChanged = (inputPostalCode: string) => {
     dispatch(changeFormData({key: 'postalCode', value: inputPostalCode}));
-    if (!isNotEmpty(inputPostalCode)) {
+    if (!validateOnlyNumbersAndLetters(inputPostalCode)) {
       dispatch(changeFormData({key: 'postalCodeError', value: 'Enter valid postal code'}));
       return;
     }
