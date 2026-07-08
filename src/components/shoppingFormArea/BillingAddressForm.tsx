@@ -9,12 +9,13 @@ import {AppState} from "../../state/reducers";
 import {changeFormData} from "../../state/actions/shippingFormActions";
 import {IShippingForm} from "../../types/CheckoutAreaTypes";
 import {
-  isNotEmpty,
+  isNotEmptyEqualStrings,
   validateEmail,
   validateOnlyLetters,
   validateOnlyNumbers,
   validateOnlyNumbersAndLetters
 } from "./validations";
+import { makeValidatedFieldHandlers } from "./formFieldHandlers";
 
 type BillingAddressFormProps = {
   loading: boolean
@@ -65,68 +66,61 @@ const BillingAddressForm: React.FC<BillingAddressFormProps> = (props) => {
     dispatch(changeFormData({key: 'country', value: country}));
   }
 
-  const handleOnEmailChanged = (inputEmail: string) => {
-    dispatch(changeFormData({key: 'email', value: inputEmail}));
-    if (!validateEmail(inputEmail)) {
-      dispatch(changeFormData({key: 'emailError', value: 'Enter valid email address'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'emailError', value: ''}));
-  }
+  const handleOnEmailChanged = makeValidatedFieldHandlers(
+    dispatch,
+    'email',
+    'emailError',
+    validateEmail,
+    'Enter valid email address',
+  );
 
-  const handleOnCityChanged = (inputCity: string) => {
-    dispatch(changeFormData({key: 'city', value: inputCity}));
-    if (!validateOnlyLetters(inputCity)) {
-      dispatch(changeFormData({key: 'cityError', value: 'Enter valid city'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'cityError', value: ''}));
-  }
+  const handleOnCityChanged = makeValidatedFieldHandlers(
+    dispatch,
+    'city',
+    'cityError',
+    validateOnlyLetters,
+    'Enter valid city',
+  );
 
-  const handleOnAddressChanged = (inputAddress: string) => {
-    dispatch(changeFormData({key: 'address', value: inputAddress}));
-    if (!validateOnlyNumbersAndLetters(inputAddress)) {
-      dispatch(changeFormData({key: 'addressError', value: 'Enter valid address'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'addressError', value: ''}));
-  }
+  const handleOnAddressChanged = makeValidatedFieldHandlers(
+    dispatch,
+    'address',
+    'addressError',
+    validateOnlyNumbersAndLetters,
+    'Enter valid address',
+  );
 
-  const handleOnPostalCodeChanged = (inputPostalCode: string) => {
-    dispatch(changeFormData({key: 'postalCode', value: inputPostalCode}));
-    if (!validateOnlyNumbersAndLetters(inputPostalCode)) {
-      dispatch(changeFormData({key: 'postalCodeError', value: 'Enter valid postal code'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'postalCodeError', value: ''}));
-  }
+  const handleOnPostalCodeChanged = makeValidatedFieldHandlers(
+    dispatch,
+    'postalCode',
+    'postalCodeError',
+    validateOnlyNumbersAndLetters,
+    'Enter valid postal code',
+  );
 
-  const handleOnFullNameChanged = (inputFullName: string) => {
-    dispatch(changeFormData({key: 'fullName', value: inputFullName}));
-    if (!validateOnlyLetters(inputFullName)) {
-      dispatch(changeFormData({key: 'fullNameError', value: 'Enter valid full name'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'fullNameError', value: ''}));
-  }
+  const handleOnFullNameChanged = makeValidatedFieldHandlers(
+    dispatch,
+    'fullName',
+    'fullNameError',
+    validateOnlyLetters,
+    'Enter valid full name',
+  );
 
-  const handleOnContactNumberChanged = (inputContactNumber: string) => {
-    dispatch(changeFormData({key: 'contactNumber', value: inputContactNumber}));
-    if (!validateOnlyNumbers(inputContactNumber)) {
-      dispatch(changeFormData({key: 'contactNumberError', value: 'Enter valid contact number'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'contactNumberError', value: ''}));
-  }
+  const handleOnContactNumberChanged = makeValidatedFieldHandlers(
+    dispatch,
+    'contactNumber',
+    'contactNumberError',
+    validateOnlyNumbers,
+    'Enter valid contact number',
+  );
 
-  const handleOnReEmailChanged = (inputReEmail: string) => {
-    dispatch(changeFormData({key: 'retypeEmail', value: inputReEmail}));
-    if (shippingForm.email !== inputReEmail && shippingForm.email !== null) {
-      dispatch(changeFormData({key: 'retypeEmailError', value: 'Email and Retype Email should be equal'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'retypeEmailError', value: ''}));
-  };
+  const handleOnReEmailChanged = makeValidatedFieldHandlers(
+    dispatch,
+    'retypeEmail',
+    'retypeEmailError',
+    (inputReEmail: string) => isNotEmptyEqualStrings(shippingForm.email, inputReEmail),
+    'Email and Retype Email should be equal',
+  );
 
   return (
     <div className='billing-address-form'>

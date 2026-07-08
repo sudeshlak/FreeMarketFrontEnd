@@ -1,32 +1,22 @@
-export const validateEmail = (email:string) => {
-  
-  return String(email)
-    .toLowerCase()
-    .match(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    )&& !(email.trim() === '');
-};
-export const validateOnlyLetters = (string:string) => {
-  return String(string)
-    .toLowerCase()
-    .match(
-      /^[A-Za-z\s]*$/
-    )&&!(string.trim() === '');
-};
+const createPatternValidator = (pattern: RegExp, value: string) =>
+  pattern.test(value);
 
-export const validateOnlyNumbers = (string:string) => {
-  return String(string)
-    .match(
-      /^[0-9]*$/
-    )&&!(string.trim() === '');
-};
+export const validateEmail = createPatternValidator.bind(
+    this, 
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+);
 
-export const validateOnlyNumbersAndLetters = (string:string) => {
-  return String(string)
-    .match(
-      /^[,a-zA-Z0-9\s]*$/
-    )&&!(string.trim() === '');;
-};
+export const validateOnlyLetters = createPatternValidator.bind(
+    this, /^[A-Za-z\s]+$/
+);
+
+export const validateOnlyNumbers = createPatternValidator.bind(
+    this, /^[0-9]+$/
+);
+
+export const validateOnlyNumbersAndLetters = createPatternValidator.bind(
+    this, /^[,a-zA-Z0-9\s]+$/
+);
 
 export const isNotEmpty = (string:string) => {
   return !(string.trim() === '');
@@ -45,4 +35,10 @@ export const calcStrength = (password:string) => {
     strengthVal = 3;
   }
   return strengthVal;
+}
+
+export const isNotEmptyEqualStrings = (
+    val1?:string|null,
+    val2?:string|null):boolean => {
+    return !!val1 && !!val2 && val1 === val2;
 }
