@@ -7,7 +7,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {IShippingForm} from "../../types/CheckoutAreaTypes";
 import {AppState} from "../../state/reducers";
 import {changeFormData} from "../../state/actions/shippingFormActions";
-import {isNotEmpty, validateOnlyLetters, validateOnlyNumbers, validateOnlyNumbersAndLetters} from "./validations";
+import {validateOnlyLetters, validateOnlyNumbers, validateOnlyNumbersAndLetters} from "./validations";
+import { makeValidatedFieldHandlers } from "./formFieldHandlers";
 
 type ChangingShippingAddressProps = {
   loading: boolean
@@ -26,49 +27,45 @@ const ChangingShippingAddress: React.FC<ChangingShippingAddressProps> = (props) 
     {value: 'India', label: 'India'}
   ];
 
-  const handleOnChangeAddress = (address: string) => {
-    dispatch(changeFormData({key: 'otherAddressBillingAddress', value: address}));
-    if (!validateOnlyNumbersAndLetters(address)) {
-      dispatch(changeFormData({key: 'otherAddressBillingAddressError', value: 'Enter valid address'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'otherAddressBillingAddressError', value: ''}));
-  }
+  const handleOnChangeAddress = makeValidatedFieldHandlers(
+    dispatch,
+    'otherAddressBillingAddress',
+    'otherAddressBillingAddressError',
+    validateOnlyNumbersAndLetters,
+    'Enter valid address',
+  );
 
-  const handleOnChangeCity = (city: string) => {
-    dispatch(changeFormData({key: 'otherAddressCity', value: city}));
-    if (!validateOnlyLetters(city)) {
-      dispatch(changeFormData({key: 'otherAddressCityError', value: 'Enter valid city'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'otherAddressCityError', value: ''}));
-  }
+  const handleOnChangeCity = makeValidatedFieldHandlers(
+    dispatch,
+    'otherAddressCity',
+    'otherAddressCityError',
+    validateOnlyLetters,
+    'Enter valid city',
+  );
 
-  const handleOnChangePostalCode = (postalCode: string) => {
-    dispatch(changeFormData({key: 'otherAddressPostelCode', value: postalCode}));
-    if (!validateOnlyNumbersAndLetters(postalCode)) {
-      dispatch(changeFormData({key: 'otherAddressPostelCodeError', value: 'Enter valid postal code'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'otherAddressPostelCodeError', value: ''}));
-  }
-  const handleOnChangeContactNumber = (contactNumber: string) => {
-    dispatch(changeFormData({key: 'otherAddressContactNumber', value: contactNumber}));
-    if (!validateOnlyNumbers(contactNumber)) {
-      dispatch(changeFormData({key: 'otherAddressContactNumberError', value: 'Enter valid contact number'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'otherAddressContactNumberError', value: ''}));
-  }
+  const handleOnChangePostalCode = makeValidatedFieldHandlers(
+    dispatch,
+    'otherAddressPostelCode',
+    'otherAddressPostelCodeError',
+    validateOnlyNumbersAndLetters,
+    'Enter valid postal code',
+  );
 
-  const handleOnChangeName = (name: string) => {
-    dispatch(changeFormData({key: 'otherAddressName', value: name}));
-    if (!validateOnlyLetters(name)) {
-      dispatch(changeFormData({key: 'otherAddressNameError', value: 'Enter valid name'}));
-      return;
-    }
-    dispatch(changeFormData({key: 'otherAddressNameError', value: ''}));
-  }
+  const handleOnChangeContactNumber = makeValidatedFieldHandlers(
+    dispatch,
+    'otherAddressContactNumber',
+    'otherAddressContactNumberError',
+    validateOnlyNumbers,
+    'Enter valid contact number',
+  );
+
+  const handleOnChangeName = makeValidatedFieldHandlers(
+    dispatch,
+    'otherAddressName',
+    'otherAddressNameError',
+    validateOnlyLetters,
+    'Enter valid name',
+  );
 
   const countrySelect: CountrySelect[] = Country.map(
     (country) => {

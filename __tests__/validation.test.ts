@@ -1,4 +1,4 @@
-import { calcStrength, isNotEmpty, validateEmail, validateOnlyLetters, validateOnlyNumbers, validateOnlyNumbersAndLetters} from "../src/components/shoppingFormArea/validations";
+import { calcStrength, isNotEmpty, isNotEmptyEqualStrings, validateEmail, validateOnlyLetters, validateOnlyNumbers, validateOnlyNumbersAndLetters} from "../src/components/shoppingFormArea/validations";
 
 describe("validation", () => {
   it("Is valid email", () => {
@@ -41,4 +41,12 @@ describe("validation", () => {
     expect(calcStrength("*Ga3&Rs6(H")).toBe(6);
   });
 
+  it("Is Not Empty Equal Strings",()=>{
+    expect(isNotEmptyEqualStrings(null,null)).toBeFalsy();
+    expect(isNotEmptyEqualStrings()).toBeFalsy();
+    expect(isNotEmptyEqualStrings(null)).toBeFalsy();
+    expect(isNotEmptyEqualStrings("","null")).toBeFalsy();
+    expect(isNotEmptyEqualStrings("A","a")).toBeFalsy();
+    expect(isNotEmptyEqualStrings("Aa","Aa")).toBeTruthy();
+  })
 });
