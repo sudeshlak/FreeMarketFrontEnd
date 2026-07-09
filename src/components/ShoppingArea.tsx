@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useTransition } from "react";
 import { Alert, Spinner } from "react-bootstrap";
 import SearchBar from "./searchBar/SearchBar";
 import Categories from "./category/Categories";
@@ -17,6 +17,7 @@ const ShoppingArea: React.FC = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useQuery(GET_ALL_PRODUCTS);
   const [couponsToPreview, setCouponsToPreview] = useState<ICoupon[]>([]);
+  const [isCouponsTransition, startCouponsTransition] = useTransition();
 
   useEffect(() => {
     if (data?.getAllProducts) {
@@ -28,12 +29,15 @@ const ShoppingArea: React.FC = () => {
     const { data } = await client.query({
       query: GET_ALL_COUPONS,
     });
-    setCouponsToPreview(data.getAllCoupons);
+    startCouponsTransition(() => {
+        setCouponsToPreview(data.getAllCoupons);
+    })
   };
 
   const trottledScroll = throttle(handleScroll, 10000);
 
   const handleOnCloseCouponModel = () => {
+
     setCouponsToPreview([]);
   };
 
