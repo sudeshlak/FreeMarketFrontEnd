@@ -1,47 +1,57 @@
-import React, {Suspense, useEffect, useState} from 'react';
-import {Col, Row, Spinner} from 'react-bootstrap';
-import {ICategory, ISearchedCategory} from '../../types/AdminProductListType';
-import {IProduct} from '../../types/IProduct';
-import AdminProductCategoryDropdown from './AdminProductListCategoryDropdown';
-import AdminProductListTable from './AdminProductListTable';
-import {useSelector} from "react-redux";
-import {AppState} from "../../state/reducers";
-import {XCircle} from "react-feather";
+import React, { Suspense, useEffect, useState, useTransition } from "react";
+import { Col, Row, Spinner } from "react-bootstrap";
+import { ICategory, ISearchedCategory } from "../../types/AdminProductListType";
+import { IProduct } from "../../types/IProduct";
+import AdminProductCategoryDropdown from "./AdminProductListCategoryDropdown";
+import AdminProductListTable from "./AdminProductListTable";
+import { useSelector } from "react-redux";
+import { AppState } from "../../state/reducers";
+import { XCircle } from "react-feather";
 import Scroll from "react-scroll";
-import SearchBar from '../adminProductListSearchBar/SearchBar';
-import {useDispatch} from 'react-redux';
-import {changeCategory} from '../../state/actions/AdminProductListActions';
-import {useQuery} from "@apollo/client";
-import {GET_ALL_PRODUCTS} from "../../graphQl/products/productQuery";
-import {setInitProducts} from "../../state/actions/productActions";
+import SearchBar from "../adminProductListSearchBar/SearchBar";
+import { useDispatch } from "react-redux";
+import { changeCategory } from "../../state/actions/AdminProductListActions";
+import { useQuery } from "@apollo/client";
+import { GET_ALL_PRODUCTS } from "../../graphQl/products/productQuery";
+import { setInitProducts } from "../../state/actions/productActions";
 
-const AdminUpdateProduct = React.lazy(() => import('../AdminUpdateProduct/AdminUpdateProduct'));
-const AdminUpdateProductPreview = React.lazy(() => import('../AdminUpdateProduct/AdminUpdateProductPreview'));
+const AdminUpdateProduct = React.lazy(
+  () => import("../AdminUpdateProduct/AdminUpdateProduct"),
+);
+const AdminUpdateProductPreview = React.lazy(
+  () => import("../AdminUpdateProduct/AdminUpdateProductPreview"),
+);
 
 const AdminProductList: React.FC = () => {
-
   const Categories: ICategory[] = [
-    {value: 0, label: 'All'},
-    {value: 1, label: 'Grocery'},
-    {value: 2, label: 'Pharmacy'},
-    {value: 3, label: 'Food'},
-    {value: 4, label: 'Electronic'}
+    { value: 0, label: "All" },
+    { value: 1, label: "Grocery" },
+    { value: 2, label: "Pharmacy" },
+    { value: 3, label: "Food" },
+    { value: 4, label: "Electronic" },
   ];
 
   const dispatch = useDispatch();
-  const activeCategory: ISearchedCategory = useSelector((state: AppState) => state.adminProductList.category);
-  const products: IProduct[] = useSelector((state: AppState) => state.products.products);
-  const [categorizedItems, setCategorizedItems] = useState<IProduct[] | null>(null);
+  const activeCategory: ISearchedCategory = useSelector(
+    (state: AppState) => state.adminProductList.category,
+  );
+  const products: IProduct[] = useSelector(
+    (state: AppState) => state.products.products,
+  );
+  const [categorizedItems, setCategorizedItems] = useState<IProduct[] | null>(
+    null,
+  );
   const [updateToProduct, setUpdateToProduct] = useState<IProduct | null>(null);
-  const {refetch} = useQuery(GET_ALL_PRODUCTS);
-  const [productName, setProductName] = useState<string>('');
+  const { refetch } = useQuery(GET_ALL_PRODUCTS);
+  const [productName, setProductName] = useState<string>("");
   const [price, setPrice] = useState<number | null>(null);
   const [discount, setDiscount] = useState<number | null>(null);
   const [productNewImage, setProductNewImage] = useState<string | null>(null);
+  const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    refetch().then(({data})=>{
-      if(data){
+    refetch().then(({ data }) => {
+      if (data) {
         dispatch(setInitProducts(data.getAllProducts));
       }
     });
@@ -51,23 +61,45 @@ const AdminProductList: React.FC = () => {
     if (!Category) {
       return;
     }
-    dispatch(changeCategory({id: Category.value, title: Category.label, searchedString: ''}));
+    dispatch(
+      changeCategory({
+        id: Category.value,
+        title: Category.label,
+        searchedString: "",
+      }),
+    );
   };
 
-  const handleOnCategorizeItem = React.useCallback((products: IProduct[]) => {
-    if (activeCategory.title === 'All') {
-      setCategorizedItems(products);
-      return;
-    }
+  const handleOnCategorizeItem = React.useCallback(
+    (products: IProduct[]) => {
+      if (activeCategory.title === "All") {
+        startTransition(() => {
+          setCategorizedItems(products);
+        });
+        return;
+      }
 
-    if (activeCategory.title === 'Searched') {
-      setCategorizedItems(products.filter(value =>
-        (value.title.toLowerCase().includes(activeCategory.searchedString.toLowerCase()))));
-      return;
-    }
+      if (activeCategory.title === "Searched") {
+        startTransition(() => {
+          setCategorizedItems(
+            products.filter((value) =>
+              value.title
+                .toLowerCase()
+                .includes(activeCategory.searchedString.toLowerCase()),
+            ),
+          );
+          return;
+        });
+      }
 
-    setCategorizedItems(products.filter(item => item.category.title === activeCategory.title));
-  }, [activeCategory]);
+      startTransition(() => {
+        setCategorizedItems(
+            products.filter((item) => item.category.title === activeCategory.title),
+          );
+        });
+    },
+    [activeCategory],
+  );
 
   useEffect(() => {
     if (!products) {
@@ -75,7 +107,6 @@ const AdminProductList: React.FC = () => {
     }
     handleOnCategorizeItem(products);
   }, [activeCategory, handleOnCategorizeItem, products]);
-
 
   const handleOnCloseUpdateSection = () => {
     setUpdateToProduct(null);
@@ -90,7 +121,7 @@ const AdminProductList: React.FC = () => {
     if (!categorizedItems) {
       return;
     }
-    const product = categorizedItems.find(item => item.id === id);
+    const product = categorizedItems.find((item) => item.id === id);
 
     if (product !== undefined) {
       setUpdateToProduct(product);
@@ -99,62 +130,78 @@ const AdminProductList: React.FC = () => {
 
   return (
     <React.Fragment>
-      {updateToProduct &&
-          <React.Fragment>
-              <Col xs={12} className='create-product-title px-0'>Update Product</Col>
-              <Row className='update-section mt-1'>
-                  <Col xs={12} sm={12}>
-                      <Row className='title px-0'>
-                          <Col xs={10} sm={10} className='update-product-text px-0'/>
-                          <Col xs={2} sm={2} className='close-icon'>
-                              <i onClick={handleOnCloseUpdateSection}><XCircle/></i>
-                          </Col>
-                      </Row>
-                  </Col>
-                  <Suspense fallback={<div className="text-center py-4"><Spinner animation="border"/></div>}>
-                    <Col md={6} lg={4} className='update-product-preview pt-2'>
-                      <AdminUpdateProductPreview productName={productName}
-                                                 updateToProduct={updateToProduct}
-                                                 price={price}
-                                                 discount={discount}
-                                                 productNewImage={productNewImage}
-                      />
-                    </Col>
-                    <Col md={6} lg={8} className='py-3'>
-                      <AdminUpdateProduct closeUpdateSection={handleOnCloseUpdateSection}
-                                          updateToProduct={updateToProduct}
-                                          productName={productName}
-                                          price={price}
-                                          discount={discount}
-                                          setProductName={setProductName}
-                                          setPrice={setPrice}
-                                          setDiscount={setDiscount}
-                                          setProductNewImage={setProductNewImage}
-                                          productNewImage={productNewImage}
-                      />
-                    </Col>
-                  </Suspense>
+      {updateToProduct && (
+        <React.Fragment>
+          <Col xs={12} className="create-product-title px-0">
+            Update Product
+          </Col>
+          <Row className="update-section mt-1">
+            <Col xs={12} sm={12}>
+              <Row className="title px-0">
+                <Col xs={10} sm={10} className="update-product-text px-0" />
+                <Col xs={2} sm={2} className="close-icon">
+                  <i onClick={handleOnCloseUpdateSection}>
+                    <XCircle />
+                  </i>
+                </Col>
               </Row>
-          </React.Fragment>
-      }
-      <Col xs={12} className='create-product-title px-0'>Product List</Col>
-      <div className='item-list'>
+            </Col>
+            <Suspense
+              fallback={
+                <div className="text-center py-4">
+                  <Spinner animation="border" />
+                </div>
+              }
+            >
+              <Col md={6} lg={4} className="update-product-preview pt-2">
+                <AdminUpdateProductPreview
+                  productName={productName}
+                  updateToProduct={updateToProduct}
+                  price={price}
+                  discount={discount}
+                  productNewImage={productNewImage}
+                />
+              </Col>
+              <Col md={6} lg={8} className="py-3">
+                <AdminUpdateProduct
+                  closeUpdateSection={handleOnCloseUpdateSection}
+                  updateToProduct={updateToProduct}
+                  productName={productName}
+                  price={price}
+                  discount={discount}
+                  setProductName={setProductName}
+                  setPrice={setPrice}
+                  setDiscount={setDiscount}
+                  setProductNewImage={setProductNewImage}
+                  productNewImage={productNewImage}
+                />
+              </Col>
+            </Suspense>
+          </Row>
+        </React.Fragment>
+      )}
+      <Col xs={12} className="create-product-title px-0">
+        Product List
+      </Col>
+      <div className="item-list">
         <Row>
-          <Col xs={12} sm={6} className='product-list-table px-2 py-2'>
-            <AdminProductCategoryDropdown categories={Categories}
-                                          activeCategory={activeCategory}
-                                          handleOnActiveCategory={handleOnActiveCategory}
+          <Col xs={12} sm={6} className="product-list-table px-2 py-2">
+            <AdminProductCategoryDropdown
+              categories={Categories}
+              activeCategory={activeCategory}
+              handleOnActiveCategory={handleOnActiveCategory}
             />
           </Col>
           <Col xs={12} sm={6}>
-            <SearchBar/>
+            <SearchBar />
           </Col>
         </Row>
         <Row>
-          <Col className='px-0 product-list-table'>
-            <AdminProductListTable activeCategory={activeCategory}
-                                   categorizedItem={categorizedItems}
-                                   requestUpdate={handleOnRequestUpdate}
+          <Col className="px-0 product-list-table">
+            <AdminProductListTable
+              activeCategory={activeCategory}
+              categorizedItem={categorizedItems}
+              requestUpdate={handleOnRequestUpdate}
             />
           </Col>
         </Row>

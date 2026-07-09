@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {use, useEffect, useState, useTransition} from "react";
 import {Row} from "react-bootstrap";
 import {BsSearch} from "react-icons/bs";
 import Select from "react-select";
@@ -17,6 +17,8 @@ const SearchBar = () => {
   const [searchBarText, setSearchBarText] = useState<string>("");
   const products: IProduct[] = useSelector((state: AppState) => state.products.products);
   const activeCategory: ISearchedCategory = useSelector((state: AppState) => state.adminProductList.category);
+  const [ispending, startTransition] = useTransition()
+
 
   const handleOnProductSelect = (selectedProduct: ProductSelect | null) => {
     if (!selectedProduct) {
@@ -41,11 +43,13 @@ const SearchBar = () => {
 
   const handleOnChangeInputText = (inputText: string) => {
     setSearchBarText(inputText);
-    const options: ProductSelect[] = products.filter(
-      (product => product.title.toLowerCase().includes(inputText.toLowerCase()))).map((product) => {
-      return {label: product.title, value: product.title}
+    startTransition(() => {
+      const options: ProductSelect[] = products.filter(
+        (product => product.title.toLowerCase().includes(inputText.toLowerCase()))).map((product) => {
+        return {label: product.title, value: product.title}
+      });
+      setOptions(options);
     });
-    setOptions(options);
   };
 
   const generateCurrentValue = () => {
@@ -68,6 +72,7 @@ const SearchBar = () => {
               theme={themeSelect}
               styles={styleSelect}
               placeholder="Search products . . ."
+              isLoading={ispending}
               options={options}
               inputValue={searchBarText}
               value={generateCurrentValue()}
