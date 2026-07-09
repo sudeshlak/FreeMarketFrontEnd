@@ -3,6 +3,11 @@ import { renderWithRedux } from "../src/util/testUtils";
 import Category from "../src/components/category/Category";
 import userEvent from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
+jest.mock("react-scroll", () => ({
+    scroller: {
+      scrollTo: jest.fn(), // Jest will track this mock function globally
+    },
+}));
 
 describe("Category change", () => {
   // 1. Define your array of test data
