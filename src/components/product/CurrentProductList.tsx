@@ -1,19 +1,21 @@
-import React, {useMemo} from "react";
-import {IProduct, ISearchedCategory} from "../../types/IProduct";
+import React, { useDeferredValue, useMemo } from "react";
+import { IProduct, ISearchedCategory } from "../../types/IProduct";
 import Product from "./Product";
-import {filterProductsByCategory} from "../../util/filterProductsByCategory";
+import { filterProductsByCategory } from "../../util/filterProductsByCategory";
 
 type currentProductListProps = {
-  activeCategory: ISearchedCategory
-  products: IProduct[]
-}
+  activeCategory: ISearchedCategory;
+  products: IProduct[];
+};
 
 const CurrentProductList: React.FC<currentProductListProps> = (props) => {
-  const {activeCategory, products} = props;
+  const { activeCategory, products } = props;
+  const deferredCategory = useDeferredValue(activeCategory);
+  const isStale = deferredCategory !== activeCategory;
 
   const currentProducts = useMemo(
-    () => filterProductsByCategory(products, activeCategory),
-    [products, activeCategory]
+    () => filterProductsByCategory(products, deferredCategory),
+    [products, deferredCategory],
   );
 
   if (currentProducts.length === 0) {
@@ -28,6 +30,6 @@ const CurrentProductList: React.FC<currentProductListProps> = (props) => {
       ))}
     </React.Fragment>
   );
-}
+};
 
 export default CurrentProductList;
