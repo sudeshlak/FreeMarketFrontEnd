@@ -72,6 +72,7 @@ const SearchBar = () => {
               theme={themeSelect}
               styles={styleSelect}
               placeholder="Search products . . ."
+              isLoading={ispending}
               options={options}
               inputValue={searchBarText}
               value={generateCurrentValue()}
