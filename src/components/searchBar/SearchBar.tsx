@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
 import { Col, Row } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 import Select from "react-select";
@@ -14,6 +20,7 @@ import { debounce } from "../../util/optimise";
 
 const SearchBar: React.FC = () => {
   const dispatch = useDispatch();
+  const [isPending, startTransition] = useTransition();
   const activeCategory: ISearchedCategory = useSelector(
     (state: AppState) => state.categoryList.category,
   );
@@ -26,13 +33,15 @@ const SearchBar: React.FC = () => {
     if (!searchBarText) {
       return;
     }
-    dispatch(
-      changeCategory({
-        id: 5,
-        title: "Searched",
-        searchedString: searchBarText,
-      }),
-    );
+    startTransition(() => {
+      dispatch(
+        changeCategory({
+          id: 5,
+          title: "Searched",
+          searchedString: searchBarText,
+        }),
+      );
+    });
   };
 
   const handleOnProductSelect = (selectedProduct: ProductSelect | null) => {
@@ -67,11 +76,13 @@ const SearchBar: React.FC = () => {
       variables: { search: searchTerm },
     });
     const options: ProductSelect[] = data.getAllProducts.map(
-      (prod: Pick<IProduct,'title'>) => {
+      (prod: Pick<IProduct, "title">) => {
         return { value: prod.title, label: prod.title };
       },
     );
-    setOptions(options);
+    startTransition(() => {
+      setOptions(options);
+    });
   }
 
   const debouncedSetOps = useMemo(() => debounce(fetchSetOptions, 1000), []);
