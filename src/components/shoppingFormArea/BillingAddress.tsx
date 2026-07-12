@@ -2,10 +2,14 @@ import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { Button, Row } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
+import { Dispatch } from "redux";
 import { ADD_ORDER } from "../../graphQl/orders/orderMutation";
 import { changeFormData } from "../../state/actions/shippingFormActions";
 import { AppState } from "../../state/reducers";
-import { IShippingForm } from "../../types/CheckoutAreaTypes";
+import {
+  IShippingForm,
+  IShippingFormInputData,
+} from "../../types/CheckoutAreaTypes";
 import { IProduct } from "../../types/IProduct";
 import BillingAddressForm from "./BillingAddressForm";
 import ChangeShippingHeader from "./ChangeShippingHeader";
@@ -18,7 +22,6 @@ import {
   TOKEN,
 } from "../../graphQl/users/userMutation";
 import { toast } from "../sweetalert/sweetalert";
-import { addNewOrder } from "../../state/actions/orderActions";
 import { ILogin } from "../../types/ILogin";
 import { changeLoginState } from "../../state/actions/loginActions";
 import { ClipLoader } from "react-spinners";
@@ -26,315 +29,331 @@ import { clearCartAction } from "../../state/actions/cartActions";
 import { IAddCoupon } from "../../types/ICoupon";
 import { removeCoupon } from "../../state/actions/couponActions";
 
-const override = {
+const LOADER_STYLE = {
   marginLeft: "20px",
   marginTop: "7px",
 };
+
+type RequiredField = {
+  field: keyof IShippingForm;
+  errorKey: keyof IShippingForm;
+};
+
+const GUEST_REQUIRED_FIELDS: readonly RequiredField[] = [
+  { field: "fullName", errorKey: "fullNameError" },
+  { field: "address", errorKey: "addressError" },
+  { field: "city", errorKey: "cityError" },
+  { field: "postalCode", errorKey: "postalCodeError" },
+  { field: "contactNumber", errorKey: "contactNumberError" },
+  { field: "email", errorKey: "emailError" },
+  { field: "retypeEmail", errorKey: "retypeEmailError" },
+  { field: "passWord", errorKey: "passWordError" },
+];
+
+const ALTERNATE_ADDRESS_FIELDS: readonly RequiredField[] = [
+  { field: "otherAddressName", errorKey: "otherAddressNameError" },
+  {
+    field: "otherAddressBillingAddress",
+    errorKey: "otherAddressBillingAddressError",
+  },
+  { field: "otherAddressCity", errorKey: "otherAddressCityError" },
+  { field: "otherAddressPostelCode", errorKey: "otherAddressPostelCodeError" },
+  {
+    field: "otherAddressContactNumber",
+    errorKey: "otherAddressContactNumberError",
+  },
+];
+
+const FORM_RESET_VALUES: IShippingFormInputData[] = [
+  { key: "fullName", value: "" },
+  { key: "address", value: "" },
+  { key: "city", value: "" },
+  { key: "postalCode", value: "" },
+  { key: "contactNumber", value: "" },
+  { key: "email", value: "" },
+  { key: "retypeEmail", value: "" },
+  { key: "passWord", value: "" },
+  { key: "validateMatchReTypeEmail", value: false },
+  { key: "changeShippingAddress", value: false },
+  { key: "otherAddressName", value: "" },
+  { key: "otherAddressBillingAddress", value: "" },
+  { key: "otherAddressCity", value: "" },
+  { key: "otherAddressPostelCode", value: "" },
+  { key: "otherAddressContactNumber", value: "" },
+  { key: "deliveryInstructions", value: "" },
+  { key: "paymentMethode", value: null },
+];
+
+function generateOrderCode(): string {
+  const date = moment().format("YYMMDD");
+  const randomString = String(Math.floor(Math.random() * 9999));
+  return date + "ODR" + randomString;
+}
+
+function buildNewUserInput(form: IShippingForm) {
+  return {
+    name: form.fullName,
+    address: form.address,
+    city: form.city,
+    postalCode: form.postalCode,
+    phoneNumber: form.contactNumber,
+    email: form.email,
+    password: form.passWord,
+    country: form.country.value,
+    type: "user",
+  };
+}
+
+function buildOrderInput(
+  form: IShippingForm,
+  productList: IProduct[],
+  coupon: IAddCoupon | null,
+  orderCode: string,
+  requestedUser: string,
+) {
+  return {
+    orderCode,
+    requestedUser,
+    changeShippingAddress: form.changeShippingAddress,
+    billingDetails: {
+      fullName: form.otherAddressName,
+      address: form.otherAddressBillingAddress,
+      city: form.otherAddressCity,
+      postalCode: form.otherAddressPostelCode,
+      country: form.otherAddressCountry.value,
+      contactNumber: form.otherAddressContactNumber,
+    },
+    deliveryInstructions: form.deliveryInstructions,
+    productList,
+    status: "requested",
+    paymentType: form.paymentMethode,
+    paymentStatus: false,
+    requestedDate: new Date().toLocaleString(),
+    discountPercentage: coupon?.discountPercentage ?? 0,
+  };
+}
+
+function setRequiredFieldErrors(
+  dispatch: Dispatch,
+  form: IShippingForm,
+  fields: readonly RequiredField[],
+): boolean {
+  let isValid = true;
+  for (const { field, errorKey } of fields) {
+    if (!form[field]) {
+      dispatch(changeFormData({ key: errorKey, value: "Required" }));
+      isValid = false;
+    }
+  }
+  return isValid && fields.every(({ errorKey }) => !form[errorKey]);
+}
+
+function validateGuestCheckoutForm(
+  form: IShippingForm,
+  dispatch: Dispatch,
+): boolean {
+  const requiredFieldsAreValid = setRequiredFieldErrors(
+    dispatch,
+    form,
+    GUEST_REQUIRED_FIELDS,
+  );
+  const hasNoFieldErrors = !(
+    form.paymentMethodeError ||
+    form.passWordError ||
+    form.retypeEmailError ||
+    form.emailError ||
+    form.contactNumberError ||
+    form.postalCodeError ||
+    form.cityError ||
+    form.addressError ||
+    form.fullNameError
+  );
+  return requiredFieldsAreValid && hasNoFieldErrors;
+}
+
+function validateAlternateShippingAddress(
+  form: IShippingForm,
+  dispatch: Dispatch,
+): boolean {
+  const fieldsAreValid = setRequiredFieldErrors(
+    dispatch,
+    form,
+    ALTERNATE_ADDRESS_FIELDS,
+  );
+  const hasNoFieldErrors = !(
+    form.changeShippingAddressError ||
+    form.otherAddressNameError ||
+    form.otherAddressBillingAddressError ||
+    form.otherAddressCityError ||
+    form.otherAddressPostelCodeError ||
+    form.otherAddressContactNumberError
+  );
+  return fieldsAreValid && hasNoFieldErrors;
+}
+
+function validatePaymentMethod(form: IShippingForm, dispatch: Dispatch): boolean {
+  if (!form.paymentMethode) {
+    dispatch(changeFormData({ key: "paymentMethodeError", value: "Required" }));
+    return false;
+  }
+  return true;
+}
 
 const BillingAddress: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const shippingForm: IShippingForm = useSelector(
     (state: AppState) => state.shippingForm,
   );
-  const productList: IProduct[] = useSelector(
+  const cartProductList: IProduct[] = useSelector(
     (state: AppState) => state.cartProducts.cartProducts,
   );
   const [getUserByToken] = useMutation(GET_USER_BY_TOKEN);
   const [addOrder] = useMutation(ADD_ORDER);
   const [addUser] = useMutation(ADD_USER);
-  const [token] = useMutation(TOKEN);
+  const [createAuthToken] = useMutation(TOKEN);
   const dispatch = useDispatch();
   const loginState: ILogin = useSelector((state: AppState) => state.login);
   const coupon: IAddCoupon | null = useSelector(
     (state: AppState) => state.coupon,
   );
 
-  const placeOrder = async (orderCode: string, requestedUser: string) => {
-    return await addOrder({
+  const isLoggedIn = loginState.login;
+  const showGuestBillingForm = !isLoggedIn;
+
+  const resetCheckoutForm = () => {
+    FORM_RESET_VALUES.forEach((entry) => dispatch(changeFormData(entry)));
+  };
+
+  const submitOrder = async (orderCode: string, requestedUser: string) => {
+    return addOrder({
       variables: {
-        newOrder: {
-          orderCode: orderCode,
-          requestedUser: requestedUser,
-          changeShippingAddress: shippingForm.changeShippingAddress,
-          billingDetails: {
-            fullName: shippingForm.otherAddressName,
-            address: shippingForm.otherAddressBillingAddress,
-            city: shippingForm.otherAddressCity,
-            postalCode: shippingForm.otherAddressPostelCode,
-            country: shippingForm.otherAddressCountry.value,
-            contactNumber: shippingForm.otherAddressContactNumber,
-          },
-          deliveryInstructions: shippingForm.deliveryInstructions,
-          productList: productList,
-          status: "requested",
-          paymentType: shippingForm.paymentMethode,
-          paymentStatus: false,
-          requestedDate: new Date().toLocaleString(),
-          discountPercentage: coupon?.discountPercentage
-            ? coupon.discountPercentage
-            : 0,
-        },
+        newOrder: buildOrderInput(
+          shippingForm,
+          cartProductList,
+          coupon,
+          orderCode,
+          requestedUser,
+        ),
       },
     });
   };
 
-  const clearForm = () => {
-    dispatch(changeFormData({ key: "fullName", value: "" }));
-    dispatch(changeFormData({ key: "address", value: "" }));
-    dispatch(changeFormData({ key: "city", value: "" }));
-    dispatch(changeFormData({ key: "postalCode", value: "" }));
-    dispatch(changeFormData({ key: "contactNumber", value: "" }));
-    dispatch(changeFormData({ key: "email", value: "" }));
-    dispatch(changeFormData({ key: "retypeEmail", value: "" }));
-    dispatch(changeFormData({ key: "passWord", value: "" }));
-    dispatch(changeFormData({ key: "validateMatchReTypeEmail", value: false }));
-    dispatch(changeFormData({ key: "changeShippingAddress", value: false }));
-    dispatch(changeFormData({ key: "otherAddressName", value: "" }));
-    dispatch(changeFormData({ key: "otherAddressBillingAddress", value: "" }));
-    dispatch(changeFormData({ key: "otherAddressCity", value: "" }));
-    dispatch(changeFormData({ key: "otherAddressPostelCode", value: "" }));
-    dispatch(changeFormData({ key: "otherAddressContactNumber", value: "" }));
-    dispatch(changeFormData({ key: "deliveryInstructions", value: "" }));
-    dispatch(changeFormData({ key: "paymentMethode", value: null }));
+  const registerGuestUser = async () => {
+    return addUser({
+      variables: {
+        newUser: buildNewUserInput(shippingForm),
+      },
+    });
   };
 
-  const clearCart = () => {
+  const passesCheckoutValidation = (): boolean => {
+    const paymentIsValid = validatePaymentMethod(shippingForm, dispatch);
+    const alternateAddressIsValid =
+      !shippingForm.changeShippingAddress ||
+      validateAlternateShippingAddress(shippingForm, dispatch);
+
+    if (isLoggedIn) {
+      return paymentIsValid && alternateAddressIsValid;
+    }
+
+    const guestFormIsValid = validateGuestCheckoutForm(shippingForm, dispatch);
+    return paymentIsValid && alternateAddressIsValid && guestFormIsValid;
+  };
+
+  const completeSuccessfulOrder = () => {
+    toast("Order placed successfully!", "", "success");
+    resetCheckoutForm();
     dispatch(clearCartAction());
+    dispatch(removeCoupon());
   };
 
-  const addNewUser = async () => {
-    return await addUser({
-      variables: {
-        newUser: {
-          name: shippingForm.fullName,
-          address: shippingForm.address,
-          city: shippingForm.city,
-          postalCode: shippingForm.postalCode,
-          phoneNumber: shippingForm.contactNumber,
-          email: shippingForm.email,
-          password: shippingForm.passWord,
-          country: shippingForm.country.value,
-          type: "user",
-        },
-      },
+  const handleGuestCheckout = async () => {
+    const { data: userData } = await registerGuestUser();
+    const { data: tokenData } = await createAuthToken({
+      variables: { email: userData.addUser.email },
     });
-  };
-  const validateShippingForm = (): boolean => {
-    let isShoppingFormEmpty: boolean = true;
-    if (!shippingForm.fullName) {
-      dispatch(changeFormData({ key: "fullNameError", value: "Required" }));
-      isShoppingFormEmpty = false;
-    }
-    if (!shippingForm.address) {
-      dispatch(changeFormData({ key: "addressError", value: "Required" }));
-      isShoppingFormEmpty = false;
-    }
-    if (!shippingForm.city) {
-      dispatch(changeFormData({ key: "cityError", value: "Required" }));
-      isShoppingFormEmpty = false;
-    }
-    if (!shippingForm.postalCode) {
-      dispatch(changeFormData({ key: "postalCodeError", value: "Required" }));
-      isShoppingFormEmpty = false;
-    }
-    if (!shippingForm.contactNumber) {
-      dispatch(
-        changeFormData({ key: "contactNumberError", value: "Required" }),
-      );
-      isShoppingFormEmpty = false;
-    }
-    if (!shippingForm.email) {
-      dispatch(changeFormData({ key: "emailError", value: "Required" }));
-      isShoppingFormEmpty = false;
-    }
-    if (!shippingForm.retypeEmail) {
-      dispatch(changeFormData({ key: "retypeEmailError", value: "Required" }));
-      isShoppingFormEmpty = false;
-    }
-    if (!shippingForm.passWord) {
-      dispatch(changeFormData({ key: "passWordError", value: "Required" }));
-      isShoppingFormEmpty = false;
-    }
+    localStorage.setItem("token", tokenData.token);
 
-    return (
-      isShoppingFormEmpty &&
-      !(
-        shippingForm.paymentMethodeError ||
-        shippingForm.passWordError ||
-        shippingForm.retypeEmailError ||
-        shippingForm.emailError ||
-        shippingForm.contactNumberError ||
-        shippingForm.postalCodeError ||
-        shippingForm.cityError ||
-        shippingForm.addressError ||
-        shippingForm.fullNameError
-      )
+    await submitOrder(
+      generateOrderCode(),
+      userData.addUser.id,
+    );
+    completeSuccessfulOrder();
+    dispatch(
+      changeLoginState({ login: true, type: userData.addUser.type }),
     );
   };
 
-  const validateChangingAddressForm = (): boolean => {
-    let isChangingAddressFormValid: boolean = true;
-
-    if (!shippingForm.otherAddressName) {
-      dispatch(
-        changeFormData({ key: "otherAddressNameError", value: "Required" }),
-      );
-      isChangingAddressFormValid = false;
-    }
-    if (!shippingForm.otherAddressBillingAddress) {
-      dispatch(
-        changeFormData({
-          key: "otherAddressBillingAddressError",
-          value: "Required",
-        }),
-      );
-      isChangingAddressFormValid = false;
-    }
-    if (!shippingForm.otherAddressCity) {
-      dispatch(
-        changeFormData({ key: "otherAddressCityError", value: "Required" }),
-      );
-      isChangingAddressFormValid = false;
-    }
-    if (!shippingForm.otherAddressPostelCode) {
-      dispatch(
-        changeFormData({
-          key: "otherAddressPostelCodeError",
-          value: "Required",
-        }),
-      );
-      isChangingAddressFormValid = false;
-    }
-    if (!shippingForm.otherAddressContactNumber) {
-      dispatch(
-        changeFormData({
-          key: "otherAddressContactNumberError",
-          value: "Required",
-        }),
-      );
-      isChangingAddressFormValid = false;
-    }
-
-    return (
-      isChangingAddressFormValid &&
-      !(
-        shippingForm.changeShippingAddressError ||
-        shippingForm.otherAddressNameError ||
-        shippingForm.otherAddressBillingAddressError ||
-        shippingForm.otherAddressCityError ||
-        shippingForm.otherAddressPostelCodeError ||
-        shippingForm.otherAddressContactNumberError
-      )
-    );
-  };
-
-  const validatePaymentMethode = (): boolean => {
-    if (!shippingForm.paymentMethode) {
-      dispatch(
-        changeFormData({ key: "paymentMethodeError", value: "Required" }),
-      );
-      return false;
-    }
-    return true;
-  };
-
-  const handleSubmit = () => {
-    setLoading(true);
-    if (productList.length === 0) {
-      toast("Add products to the cart", "", "info");
-      setLoading(false);
+  const handleLoggedInCheckout = async () => {
+    const authToken = localStorage.getItem("token");
+    if (!authToken) {
       return;
     }
-    if (!loginState.login) {
-      if (
-        !validatePaymentMethode() ||
-        (shippingForm.changeShippingAddress &&
-          !validateChangingAddressForm()) ||
-        !validateShippingForm()
-      ) {
-        setLoading(false);
-        return;
-      }
-      addNewUser()
-        .then(async ({ data }) => {
-          await token({ variables: { email: data.addUser.email } }).then(
-            ({ data }) => {
-              localStorage.setItem("token", data.token);
-            },
-          );
-          placeOrder(renderOrderCode(), data.addUser.id)
-            .then(({ data }) => {
-              dispatch(addNewOrder(data.addOrder));
-              toast("Order placed successfully!", "", "success");
-              clearForm();
-              clearCart();
-              setLoading(false);
-            })
-            .catch((error) => {
-              toast("Failed to place order", "", "error");
-              setLoading(false);
-            });
-          dispatch(changeLoginState({ login: true, type: data.addUser.type }));
-        })
-        .catch((error) => {
-          if (error.message === "Email already exists") {
-            dispatch(
-              changeFormData({
-                key: "emailError",
-                value: "Email already exists",
-              }),
-            );
-            setLoading(false);
-          } else {
-            toast(
-              "Failed to place order,Problem with registration,Try again!",
-              "",
-              "error",
-            );
-            setLoading(false);
-          }
-        });
-    } else {
-      if (
-        (shippingForm.changeShippingAddress &&
-          !validateChangingAddressForm()) ||
-        !validatePaymentMethode()
-      ) {
-        setLoading(false);
-        return;
-      }
-      const token: string | null = localStorage.getItem("token");
-      if (!token) {
-        setLoading(false);
-        return;
-      }
-      getUserByToken({ variables: { token: token } }).then(({ data }) => {
-        placeOrder(renderOrderCode(), data.getUserByToken.id)
-          .then(({ data }) => {
-            dispatch(addNewOrder(data.addOrder));
-            toast("Order placed successfully!", "", "success");
-            clearForm();
-            clearCart();
-            dispatch(removeCoupon());
-            setLoading(false);
-          })
-          .catch((error) => {
-            toast("Failed to place order", "", "error");
-            setLoading(false);
-          });
-      });
-    }
+
+    const { data: userData } = await getUserByToken({
+      variables: { token: authToken },
+    });
+    await submitOrder(
+      generateOrderCode(),
+      userData.getUserByToken.id,
+    );
+    completeSuccessfulOrder();
   };
 
-  const renderOrderCode = () => {
-    const date: string = moment().format("YYMMDD");
-    const randomString: string = String(Math.floor(Math.random() * 9999));
-    return date + "ODR" + randomString;
+  const handleCheckoutError = (error: unknown) => {
+    if (
+      !isLoggedIn &&
+      error instanceof Error &&
+      error.message === "Email already exists"
+    ) {
+      dispatch(
+        changeFormData({
+          key: "emailError",
+          value: "Email already exists",
+        }),
+      );
+      return;
+    }
+
+    if (!isLoggedIn) {
+      toast(
+        "Failed to place order,Problem with registration,Try again!",
+        "",
+        "error",
+      );
+      return;
+    }
+
+    toast("Failed to place order", "", "error");
+  };
+
+  const handlePlaceOrderClick = async () => {
+    setLoading(true);
+    try {
+      if (cartProductList.length === 0) {
+        toast("Add products to the cart", "", "info");
+        return;
+      }
+
+      if (!passesCheckoutValidation()) {
+        return;
+      }
+
+      if (isLoggedIn) {
+        await handleLoggedInCheckout();
+      } else {
+        await handleGuestCheckout();
+      }
+    } catch (error) {
+      handleCheckoutError(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <React.Fragment>
-      {!loginState.login && (
+    <>
+      {showGuestBillingForm && (
         <Row className="billing-address">
           <div className="billing-address-header">
             <h5>Shipping and Billing Address</h5>
@@ -346,17 +365,17 @@ const BillingAddress: React.FC = () => {
       <DeliveryInstructions loading={loading} />
       <Payment loading={loading} />
       <div className="order-btn justify-content-center">
-        <Button type="submit" onClick={handleSubmit}>
+        <Button type="submit" onClick={handlePlaceOrderClick}>
           Order
           <ClipLoader
-            color={"#ffffff"}
+            color="#ffffff"
             loading={loading}
-            cssOverride={override}
+            cssOverride={LOADER_STYLE}
             size={13}
           />
         </Button>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 
