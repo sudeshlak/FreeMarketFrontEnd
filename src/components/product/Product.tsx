@@ -48,7 +48,7 @@ const Product: React.FC<ProductProps> = (props) => {
   }
 
   return (
-    <Col className="product px-2 my-2" lg="3" md="4" xs="6">
+    <Col className="product px-2 my-2" data-test={`product-${products.id}`} lg="3" md="4" xs="6">
       <Row className="product-item py-2">
         <Col className="img-col" xs="12">
           <DisplayImage image={products.image} className={'img'}/>
@@ -78,6 +78,7 @@ const Product: React.FC<ProductProps> = (props) => {
         </Col>
         <Col lg={4} md={4} xs={12}>
           <input type="number"
+                 data-test="product-count"
                  min={1}
                  className="product-count w-100"
                  value={quantity}
@@ -85,11 +86,11 @@ const Product: React.FC<ProductProps> = (props) => {
         </Col>
         <Col lg={8} md={8} xs={12} className="product-btn">
           {isInCart(products.id) ?
-            <Button className="product-update-btn" onClick={() => handleOnProductUpdate(products)}>
+            <Button data-test="product-update-btn" className="product-update-btn" onClick={() => handleOnProductUpdate(products)}>
               Update
             </Button>
             :
-            <Button onClick={() => handleOnProductAdd(products)} className="product-add-btn">
+            <Button data-test="product-add-btn" onClick={() => handleOnProductAdd(products)} className="product-add-btn">
               Add To Cart
             </Button>
           }
