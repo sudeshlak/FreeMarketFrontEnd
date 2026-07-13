@@ -59,7 +59,11 @@
     "start": "npx serve@latest ./build",
     "test": "jest",
     "test:watch": "jest --watch",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:e2e": "cypress run --e2e",
+    "cypress:run:component": "cypress run --component",
+    "test:e2e": "start-server-and-test start http://localhost:3000 cypress:run:e2e"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.3.0",
