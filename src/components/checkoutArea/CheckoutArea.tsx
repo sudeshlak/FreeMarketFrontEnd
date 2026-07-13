@@ -68,7 +68,7 @@ const CheckoutArea: React.FC = () => {
                               prefix={'Rs. '}
                               decimalScale={2} fixedDecimalScale={true} renderText={smallCentsWithPrefix}
         />,
-        removeIcon: <Trash size='1.3em' className="remove-btn" onClick={() => handleRemoveItem(item.id)}/>
+        removeIcon: <Trash size='1.3em' className="remove-btn" data-test="remove-btn" onClick={() => handleRemoveItem(item.id)}/>
       };
       return itemRow;
     });
@@ -98,7 +98,7 @@ const CheckoutArea: React.FC = () => {
             </Col>
           </Row>
         </Col>
-        <div className='checkout-table-area'>
+        <div className='checkout-table-area' data-test="checkout-table-area">
           <Col xs={12} sm={12} className='py-3 checkout-table-title'>Shopping Cart</Col>
           <Col>
             <Card.Body className="pt-0">

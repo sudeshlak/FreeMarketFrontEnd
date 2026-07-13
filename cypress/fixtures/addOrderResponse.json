@@ -1,0 +1,23 @@
+{
+  "data": {
+    "addOrder": {
+      "id": "order-123",
+      "orderCode": "240713ODR1234",
+      "requestedDate": "7/13/2026, 3:45:00 PM",
+      "billingDetails": {
+        "fullName": "Test User",
+        "address": "123 Test St",
+        "city": "Test City",
+        "postalCode": "12345",
+        "country": "United States of America",
+        "contactNumber": "1234567890"
+      },
+      "deliveryInstructions": "",
+      "productList": [],
+      "status": "requested",
+      "paymentType": "card",
+      "paymentStatus": false,
+      "discountPercentage": 0
+    }
+  }
+}

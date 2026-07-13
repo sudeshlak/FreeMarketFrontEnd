@@ -35,6 +35,7 @@ const Payment: React.FC<PaymentMethodsProps> = (props) => {
         <h5>Payment Methods</h5>
         <Row className='flex-fill justify-content-around'>
           <Col xs={11} sm={5}
+               data-test={'credit-card'}
                className={"mt-2 credit-card-bg " + (shippingForm.paymentMethode === "onlinePayment" && "selected-card")}
                onClick={handleOnClickCredit}>
             <i className="far fa-credit-card"/>
@@ -43,6 +44,7 @@ const Payment: React.FC<PaymentMethodsProps> = (props) => {
             </div>
           </Col>
           <Col xs={11} sm={5}
+               data-test={'money-bill'}
                className={"mt-2 credit-card-bg " + (shippingForm.paymentMethode === "cashOnDelivery" && "selected-card")}
                onClick={handleOnClickMoney}>
             <i className="far fa-money-bill-alt"/>

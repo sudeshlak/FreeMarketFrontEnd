@@ -271,6 +271,7 @@ const BillingAddressForm: React.FC<BillingAddressFormProps> = (props) => {
             <Form.Label>Retype Email*</Form.Label>
             <Form.Control type="email"
                           required
+                          placeholder="Retype Email"
                           disabled={loading}
                           value={shippingForm.retypeEmail}
                           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>

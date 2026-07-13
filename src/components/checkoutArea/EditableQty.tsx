@@ -25,9 +25,9 @@ const EditableQty: React.FC<EditableQtyProps> = (props) => {
 
     return (
         <div className='qty-editor'>
-            <MinusCircle  className={"minus-circle"} size="18" onClick={handleMinusQty}/>
+            <MinusCircle  className={"minus-circle"} data-test={`minus-circle-${item.id}`} size="18" onClick={handleMinusQty}/>
             <label>{item.quantity}</label>
-            <PlusCircle className={"plus-circle"} size="18" onClick={handleAddQty}/>
+            <PlusCircle className={"plus-circle"} data-test={`plus-circle-${item.id}`} size="18" onClick={handleAddQty}/>
         </div>
     )
 };
