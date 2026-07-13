@@ -68,6 +68,7 @@ const MainMiddleNavBar: React.FC = () => {
                 {...overlayTriggerRenderProps}
                 ref={overlayTriggerRenderProps.ref}
                 className="shopping-cart-icon"
+                data-test="shopping-cart-icon"
               >
                 <i className="cart-icon">
                   <ShoppingCart size="2em" color="#4caf50" />
