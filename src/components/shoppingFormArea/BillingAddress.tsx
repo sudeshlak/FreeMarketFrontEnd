@@ -28,61 +28,7 @@ import { ClipLoader } from "react-spinners";
 import { clearCartAction } from "../../state/actions/cartActions";
 import { IAddCoupon } from "../../types/ICoupon";
 import { removeCoupon } from "../../state/actions/couponActions";
-
-const LOADER_STYLE = {
-  marginLeft: "20px",
-  marginTop: "7px",
-};
-
-type RequiredField = {
-  field: keyof IShippingForm;
-  errorKey: keyof IShippingForm;
-};
-
-const GUEST_REQUIRED_FIELDS: readonly RequiredField[] = [
-  { field: "fullName", errorKey: "fullNameError" },
-  { field: "address", errorKey: "addressError" },
-  { field: "city", errorKey: "cityError" },
-  { field: "postalCode", errorKey: "postalCodeError" },
-  { field: "contactNumber", errorKey: "contactNumberError" },
-  { field: "email", errorKey: "emailError" },
-  { field: "retypeEmail", errorKey: "retypeEmailError" },
-  { field: "passWord", errorKey: "passWordError" },
-];
-
-const ALTERNATE_ADDRESS_FIELDS: readonly RequiredField[] = [
-  { field: "otherAddressName", errorKey: "otherAddressNameError" },
-  {
-    field: "otherAddressBillingAddress",
-    errorKey: "otherAddressBillingAddressError",
-  },
-  { field: "otherAddressCity", errorKey: "otherAddressCityError" },
-  { field: "otherAddressPostelCode", errorKey: "otherAddressPostelCodeError" },
-  {
-    field: "otherAddressContactNumber",
-    errorKey: "otherAddressContactNumberError",
-  },
-];
-
-const FORM_RESET_VALUES: IShippingFormInputData[] = [
-  { key: "fullName", value: "" },
-  { key: "address", value: "" },
-  { key: "city", value: "" },
-  { key: "postalCode", value: "" },
-  { key: "contactNumber", value: "" },
-  { key: "email", value: "" },
-  { key: "retypeEmail", value: "" },
-  { key: "passWord", value: "" },
-  { key: "validateMatchReTypeEmail", value: false },
-  { key: "changeShippingAddress", value: false },
-  { key: "otherAddressName", value: "" },
-  { key: "otherAddressBillingAddress", value: "" },
-  { key: "otherAddressCity", value: "" },
-  { key: "otherAddressPostelCode", value: "" },
-  { key: "otherAddressContactNumber", value: "" },
-  { key: "deliveryInstructions", value: "" },
-  { key: "paymentMethode", value: null },
-];
+import { ALTERNATE_ADDRESS_FIELDS, FORM_RESET_VALUES, GUEST_REQUIRED_FIELDS, LOADER_STYLE, RequiredField } from "./billingFormConstants";
 
 function generateOrderCode(): string {
   const date = moment().format("YYMMDD");
@@ -152,7 +98,7 @@ function validateGuestCheckoutForm(
   form: IShippingForm,
   dispatch: Dispatch,
 ): boolean {
-  const requiredFieldsAreValid = setRequiredFieldErrors(
+  const isRequiredFieldsAreValid = setRequiredFieldErrors(
     dispatch,
     form,
     GUEST_REQUIRED_FIELDS,
@@ -168,7 +114,7 @@ function validateGuestCheckoutForm(
     form.addressError ||
     form.fullNameError
   );
-  return requiredFieldsAreValid && hasNoFieldErrors;
+  return isRequiredFieldsAreValid && hasNoFieldErrors;
 }
 
 function validateAlternateShippingAddress(
