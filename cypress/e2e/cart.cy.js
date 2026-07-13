@@ -1,3 +1,7 @@
+import { createStore } from "redux";
+import { rootReducer } from "../src/state/reducers";
+import { setInitProducts } from "../src/state/actions/productActions";
+
 describe("Product Item Cart Flow", () => {
   beforeEach(() => {
     cy.visit("/");
