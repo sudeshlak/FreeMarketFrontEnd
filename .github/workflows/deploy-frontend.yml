@@ -27,6 +27,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           component: true
+          
       - name: E2E tests
         uses: cypress-io/github-action@v6
         with:
@@ -34,6 +35,11 @@ jobs:
           start: npm start
           wait-on: 'http://localhost:3000'
           wait-on-timeout: 120
+          record: true 
+          component: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   build-and-push:
     runs-on: ubuntu-latest

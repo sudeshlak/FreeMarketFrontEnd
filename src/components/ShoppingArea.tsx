@@ -50,7 +50,7 @@ const ShoppingArea: React.FC = () => {
 
   return (
     <div className="shopping-area">
-      {couponsToPreview.length > 0 && (
+      {!!couponsToPreview?.length && (
         <CouponPreviewPopup
           coupons={couponsToPreview}
           handleOnCloseCouponModel={handleOnCloseCouponModel}

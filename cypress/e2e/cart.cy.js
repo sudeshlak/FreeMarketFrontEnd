@@ -1,27 +1,26 @@
 import { createStore } from "redux";
-import { rootReducer } from "../src/state/reducers";
-import { setInitProducts } from "../src/state/actions/productActions";
+import { rootReducer } from "../../src/state/reducers";
+import { setInitProducts } from "../../src/state/actions/productActions";
 
 describe("Product Item Cart Flow", () => {
   beforeEach(() => {
+    // Mock the GraphQL API to return test products
+    cy.intercept("POST", "http://localhost:3002/graphql", (req) => {
+      console.log(req.body.operationName)
+      if (req.body.operationName === "getAllProducts") {
+        req.reply({
+          fixture: "products.json",
+        });
+      }else{
+        req.reply({});
+      }
+    }).as("getAllProducts");
     cy.visit("/");
+    cy.wait("@getAllProducts");
   });
 
   it("should handle empty cart, add item, update quantity, and delete item", () => {
-     const store = createStore(rootReducer);
-     store.dispatch(
-      setInitProducts([{
-        id: "6a09322b383594589d217b6e",
-        title: "Test Product",
-        category: { id: 1, title: "Test Category" },
-        quantity: 1,
-        regular_price: 100,
-        discount_price: 10,
-        image: "test.jpg",
-      }]),
-    );
-
-    //Click on shopping cart icon - should open empty cart
+    // Step 1: Click on shopping cart icon - should open empty cart
     cy.getWithTestId("shopping-cart-icon").click();
     cy.getWithTestId("empty-cart").as("empty-cart").should("be.visible");
 
@@ -37,7 +36,7 @@ describe("Product Item Cart Flow", () => {
       .as("non-empty-cart")
       .should("be.visible")
       .within(() => {
-        cy.getWithTestId("cart-product")
+        cy.getWithTestId("cart-product-6a09322b383594589d217b6e")
           .should("be.visible")
           .within(() => {
             cy.getWithTestId("cart-product-qty").should(
@@ -47,13 +46,13 @@ describe("Product Item Cart Flow", () => {
           });
       });
 
-    //Change quantity to 4 and click update
+    // Step 3: Change quantity to 4 and click update
     cy.getWithTestId("product-6a09322b383594589d217b6e").within(() => {
       cy.getWithTestId("product-count").type("4");
       cy.getWithTestId("product-update-btn").click();
     });
 
-    //Verify non-empty cart with Qty.2
+    // Verify non-empty cart with Qty.2
     cy.getWithTestId("shopping-cart-icon").click();
     cy.getWithTestId("non-empty-cart")
       .as("non-empty-cart")
@@ -74,38 +73,39 @@ describe("Product Item Cart Flow", () => {
   });
 });
 
-describe.only("Checkout Page Cart Flow", () => {
+describe("Checkout Page Cart Flow", () => {
   beforeEach(() => {
+    // Mock the GraphQL API to return test products
+    cy.intercept("POST", "http://localhost:3002/graphql", (req) => {
+      console.log(req.body.operationName)
+      if (req.body.operationName === "getAllProducts") {
+        req.reply({
+          fixture: "products.json",
+        });
+      }else{
+        req.reply({
+          fixture: "products.json",
+        });
+      }
+    }).as("getAllProducts");
     cy.visit("/");
+    cy.wait("@getAllProducts");
   });
 
   it.only("should handle checkout page cart operations", () => {
-    const store = createStore(rootReducer);
-     store.dispatch(
-      setInitProducts([{
-        id: "6a09326a3835941499217b72",
-        title: "Test Product",
-        category: { id: 1, title: "Test Category" },
-        quantity: 1,
-        regular_price: 100,
-        discount_price: 10,
-        image: "test.jpg",
-      }]),
-    );
-
-    //Add quantity 2 and click add to cart
+    // Step 1: Add quantity 2 and click add to cart
     cy.getWithTestId("product-6a09326a3835941499217b72").within(() => {
       cy.getWithTestId("product-add-btn").click();
     });
 
-    //Click shopping cart icon and navigate to checkout
+    // Step 2: Click shopping cart icon and navigate to checkout
     cy.getWithTestId("shopping-cart-icon").click();
     cy.getWithTestId("cart-checkout-btn").click();
 
-    //Verify navigation to checkout page
+    // Verify navigation to checkout page
     cy.url().should("include", "/checkout");
 
-    //Verify table with one tr containing td with text 2
+    // Step 3: Verify table with one tr containing td with text 2
     cy.getWithTestId("checkout-table-area")
       .find("table")
       .should("exist")
@@ -118,7 +118,7 @@ describe.only("Checkout Page Cart Flow", () => {
           });
       });
 
-    //Open cart and verify Qty.3
+    // Open cart and verify Qty.3
     cy.getWithTestId("shopping-cart-icon").click();
     cy.getWithTestId("non-empty-cart")
       .should("be.visible")
@@ -133,7 +133,7 @@ describe.only("Checkout Page Cart Flow", () => {
           });
       });
 
-    //Click minus-circle to decrease quantity
+    // Step 5: Click minus-circle to decrease quantity
     cy.getWithTestId("checkout-table-area")
       .find("table")
       .within(() => {
@@ -150,7 +150,7 @@ describe.only("Checkout Page Cart Flow", () => {
       });
     });
 
-    //Click minus-circle to decrease quantity
+    // Step 5: Click minus-circle to decrease quantity
     cy.getWithTestId("checkout-table-area")
       .find("table")
       .within(() => {
