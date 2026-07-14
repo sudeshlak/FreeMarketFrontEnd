@@ -1,0 +1,34 @@
+{
+  "data" : {
+      "getAllProducts": [
+    {
+      "id": "6a09322b383594589d217b6e",
+      "title": "iphone 13",
+      "category": {
+        "id": "69fe3c8a1ae3b91390405641",
+        "title": "electronic",
+        "__typename": "Category"
+      },
+      "quantity": 12,
+      "regular_price": 100000,
+      "discount_price": 1,
+      "image": "260516PRO1254.jpeg",
+      "__typename": "Product"
+    },
+    {
+      "id": "6a09326a3835941499217b72",
+      "title": "iphone 14",
+      "category": {
+        "id": "69fe3c8a1ae3b91390405641",
+        "title": "electronic",
+        "__typename": "Category"
+      },
+      "quantity": 12,
+      "regular_price": 100000,
+      "discount_price": 1,
+      "image": "260516PRO1254.jpeg",
+      "__typename": "Product"
+    }
+  ]
+  }
+}
