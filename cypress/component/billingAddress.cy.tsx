@@ -4,6 +4,7 @@ import { createStore } from "redux";
 import { rootReducer } from "../../src/state/reducers";
 import { ApolloProvider } from "@apollo/client";
 import client from "../../src/apollo/apollo";
+import { addCartProduct } from "../../src/state/actions/cartActions";
 import { FORM_RESET_VALUES } from "../../src/components/shoppingFormArea/billingFormConstants";
 import { changeFormData } from "../../src/state/actions/shippingFormActions";
 
@@ -12,7 +13,7 @@ describe("Billing address form", () => {
 
   beforeEach(() => {
     store.dispatch(
-      setInitProducts({
+      addCartProduct({
         id: "test-product-1",
         title: "Test Product",
         category: { id: 1, title: "Test Category" },
@@ -106,7 +107,8 @@ describe("Billing address form", () => {
     cy.get('input[placeholder="Postal Code"]').type("12345");
     cy.get('input[type="tel"]').type("1234567890");
     cy.get('input[placeholder="Email"]').type("test@example.com");
-    cy.get('input[placeholder="Retype Email"]').type("test@example.com");
+    cy.get('input[placeholder="Retype Email"]')
+      .type("test@example.com");
     cy.get('input[type="password"]').type("Password@123");
 
     // Select country keep default
