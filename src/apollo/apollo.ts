@@ -14,7 +14,7 @@ const authLink = setContext((_, {headers}) => {
 });
 
 const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_URL || '/graphql',
+  uri: process.env.NEXT_PUBLIC_API_URL +'/graphql' || '/graphql',
 });
 
 const client = new ApolloClient({
