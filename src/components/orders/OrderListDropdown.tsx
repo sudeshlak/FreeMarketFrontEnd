@@ -12,6 +12,8 @@ type OrderListDropdownProps = {
 };
 
 const OrderListDropdown: React.FC<OrderListDropdownProps> = (props) => {
+ const [donloaded, setDonloaded] = React.useState(0);
+
   async function onclickCsvImport() {
     try {
       const token = localStorage.getItem("token");
@@ -34,7 +36,13 @@ const OrderListDropdown: React.FC<OrderListDropdownProps> = (props) => {
           try {
             while (true) {
               const { done, value } = await reader!.read();
-              if (done) break;
+              if (done) {
+                setTimeout(() => {
+                  setDonloaded(0);
+                },3000);
+                break;
+              };
+              setDonloaded((value?.length || 0)/1024);
               controller.enqueue(value);
             }
             controller.close();
@@ -78,7 +86,7 @@ const OrderListDropdown: React.FC<OrderListDropdownProps> = (props) => {
       </Col>
       <Col xs={4} md={6} className="d-flex justify-content-end">
         <Button variant="link" size="sm" onClick={onclickCsvImport}>
-          Download CSV
+          Download CSV {donloaded > 0 && `(${donloaded.toFixed(2)} KB)`}
         </Button>
       </Col>
     </Row>
